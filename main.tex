@@ -1,0 +1,27 @@
+\documentclass[openany, 12pt, b5paper]{memoir}
+\input{TeX_files/preamble.tex}
+\begin{document}
+
+\title{\langname : A Complete Reference}
+\author{Pancake}
+% \date{\displaydate{startdate} - \today}
+\frontmatter
+\maketitle
+\newpage
+\begin{KeepFromToc}
+  \tableofcontents
+\end{KeepFromToc}
+% \tableofcontents
+\mainmatter
+
+\include{TeX_files/phonology}
+\include{TeX_files/morphology/morphology}
+\include{TeX_files/syntax/syntax}
+
+
+% \include{TeX_files/examples}
+\backmatter
+% bibliography, glossary and index would go here.
+
+\end{document}
+

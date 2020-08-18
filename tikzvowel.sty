@@ -1,0 +1,60 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tikzvowel}[2014/08/21 Package to create vowel charts using tikz]
+\RequirePackage{tikz}
+
+\def\tv@V(#1,#2){barycentric cs:hf={(3-#1)*(2-#2)},hb={(3-#1)*#2},lf={#1*(2-#2)},lb={#1*#2}}
+
+\newtoks\tv@points
+\def\tv@vowelblob{%
+  \tv@points={}%
+  \tv@next
+}
+\def\tv@next{%
+  \@ifnextchar\bgroup{\tv@nextpoint}{\tv@donepoints}%
+}
+\def\tv@nextpoint#1{%
+  \tv@points=\expandafter{\the\tv@points(\tv@V(#1)) }%
+  \tv@next
+}
+\def\tv@donepoints{%
+  \edef\next{%
+    \noexpand\draw [dashed] plot [smooth cycle] coordinates { \the\tv@points} ;%
+  }%
+  \next
+}
+
+\newcommand{\tv@vpoint}[4][] {
+\node[dot, #1, label={center: {#4}}] at (\tv@V({#2},{#3})) (\detokenize{#4}) {};
+}
+
+\newcommand{\tv@vowelarrow}[3][] {
+  \draw[-latex, shorten >= 2pt, line width=1pt, #1] (#2) -- (#3) node[midway,sloped, above] {};
+}
+
+\newenvironment{vowel}[1][]
+{\let\vpoint\tv@vpoint\let\vblob\tv@vowelblob\let\vowelarrow\tv@vowelarrow
+  \begin{tikzpicture}[#1]
+    \tikzset{
+      vowel/.style={fill=white, anchor=mid, text depth=0ex, text height=1ex},
+      dot/.style={fill=white,minimum size=3.5ex,inner sep=0pt,outer sep=0pt},
+    }
+
+    \coordinate (hf) at (0,3); % high front
+    \coordinate (hb) at (4,3); % high back
+    \coordinate (lf) at (2,0); % low front
+    \coordinate (lb) at (4,0); % low back        
+
+    % Draw the horizontal lines first.
+    \draw (\tv@V(0,0)) -- (\tv@V(0,2));
+    \draw (\tv@V(1,0)) -- (\tv@V(1,2));
+    \draw (\tv@V(2,0)) -- (\tv@V(2,2));
+    \draw (\tv@V(3,0)) -- (\tv@V(3,2));
+
+    % Draw the vertical lines.
+    \draw (\tv@V(0,0)) -- (\tv@V(3,0));
+    \draw (\tv@V(0,1)) -- (\tv@V(3,1));
+    \draw (\tv@V(0,2)) -- (\tv@V(3,2));
+    }
+    {
+  \end{tikzpicture}
+}

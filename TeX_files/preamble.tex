@@ -1,0 +1,36 @@
+\usepackage{fontspec}
+% \usepackage[us]{datetime}
+% \newdate{startdate}{15}{3}{2020}
+\usepackage{paracol}
+
+\usepackage{expex, tikzvowel, phonrule}
+\input{tikztone.tex}
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{linktoc=all}
+
+\pagestyle{ruled}
+\makeoddfoot{plain}{}{}{\thepage}
+\makeevenfoot{plain}{\thepage}{}{}
+\copypagestyle{title}{empty}
+
+\setmainfont{Libertinus Serif}
+
+\setlength{\parindent}{0pt}
+\nonzeroparskip
+
+\lingset{
+  glstyle=nlevel,
+  belowglpreambleskip={-.5\parskip},
+  aboveglftskip={-.5\parskip},
+  exskip={0pt},
+  glneveryline={,\it,\nogloss}
+}
+
+% Doc specific stuff
+\newcommand{\langword}[1]{\textit{#1}}
+\newcommand{\langname}{Ahale}
+
+\newcommand{\pronounced}[1]{\vskip-0.5\parskip[#1]}
+
+

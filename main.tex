@@ -1,10 +1,10 @@
 \documentclass[openany, 12pt, b5paper]{memoir}
+\let\ordinal\relax %! Fixes \ordinal ocnflict with memoir
 \input{TeX_files/preamble.tex}
 \begin{document}
-
 \title{\langname : A Complete Reference}
 \author{Pancake}
-% \date{\displaydate{startdate} - \today} %? This was causing a warning, I find it annoying, so its been commented out for now
+\date{\displaydate{startdate} - \today}
 \frontmatter
 \maketitle
 \newpage

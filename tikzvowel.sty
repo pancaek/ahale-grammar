@@ -28,11 +28,11 @@
 }
 
 \newcommand{\tv@vowelarrow}[3][] {
-  \draw[-latex, shorten >= 2pt, line width=1pt, #1] (#2) -- (#3) node[midway,sloped, above] {};
+  \draw[-latex, shorten >= 2pt, line width=.75pt, #1] (#2) -- (#3) node[midway,sloped, above] {};
 }
 
 \newenvironment{vowel}[1][]
-{\let\vpoint\tv@vpoint\let\vblob\tv@vowelblob\let\vowelarrow\tv@vowelarrow
+{\let\vpoint\tv@vpoint\let\vblob\tv@vowelblob\let\varrow\tv@vowelarrow
   \begin{tikzpicture}[#1]
     \tikzset{
       vowel/.style={fill=white, anchor=mid, text depth=0ex, text height=1ex},

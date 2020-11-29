@@ -119,11 +119,9 @@
   space token width=0.125cm
 }
 
-
 \makeatletter
 
 \def\at@{@}
-
 
 \newcommand\contour[2][]{%
   \begin{scope}[#1]
@@ -135,7 +133,6 @@
     \contourtokenunderlinestate=0\relax%
     \@contour#2@%
     }
-
 
     % Must check for a spaces
     \def\@contour{\futurelet\@token\@checkforspace}

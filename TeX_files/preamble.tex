@@ -2,21 +2,22 @@
 \let\ordinal\relax %! Fixes \ordinal conflict with memoir
 \usepackage[us]{datetime}
 \newdate{startdate}{15}{3}{2020}
-% \usepackage{paracol}
 \usepackage{enumitem}
 \setlist[itemize]{topsep=0pt, itemsep=.5\itemsep}
+\setlist[description]{topsep=0pt, itemsep=.5\itemsep}
+\setlist[enumerate]{topsep=0pt, itemsep=.5\itemsep}
 
-\usepackage{expex, tikzvowel, phonrule}
-\input{tikztone.tex}
+\usepackage{expex, tikzvowel, phonrule, tikztone}
 
 \usepackage[hidelinks]{hyperref}
 \hypersetup{linktoc=all}
 
 \titlingpageend{\clearforchapter}{\clearforchapter} %! Titlingpage/openany fix for blank page
 \pagestyle{ruled}
-\makeoddfoot{plain}{}{}{\thepage}
-\makeevenfoot{plain}{\thepage}{}{}
-\copypagestyle{title}{empty}
+\makeevenfoot{ruled}{}{}{\thepage}
+\makeoddfoot{ruled}{\thepage}{}{}
+\makeevenfoot{plain}{}{}{\thepage}
+\makeoddfoot{plain}{\thepage}{}{}
 
 \setmainfont{Libertinus Serif}
 
@@ -38,5 +39,5 @@
 \newcommand{\pronounced}[1]{\\[.5\parskip][#1]}
 \newcommand{\smoyd}[2]{\trailingcitation{\href{#2}{(\textsc{5moyd \##1})}}}
 \newcommand{\lit}[1]{\textsc{lit.} `#1'}
-
+\newcommand{\fleuron}{❧}
 \raggedbottomsection

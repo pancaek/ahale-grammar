@@ -35,14 +35,13 @@
 {\let\vpoint\tv@vpoint\let\vblob\tv@vowelblob\let\varrow\tv@vowelarrow
   \begin{tikzpicture}[#1]
     \tikzset{
-      vowel/.style={fill=white, anchor=mid, text depth=0ex, text height=1ex},
       dot/.style={fill=white,minimum size=3.5ex,inner sep=0pt,outer sep=0pt},
     }
 
     \coordinate (hf) at (0,3); % high front
     \coordinate (hb) at (4,3); % high back
     \coordinate (lf) at (2,0); % low front
-    \coordinate (lb) at (4,0); % low back        
+    \coordinate (lb) at (4,0); % low back
 
     % Draw the horizontal lines first.
     \draw (\tv@V(0,0)) -- (\tv@V(0,2));

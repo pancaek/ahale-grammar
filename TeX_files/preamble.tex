@@ -1,43 +1,47 @@
 \usepackage{fontspec}
 \let\ordinal\relax %! Fixes \ordinal conflict with memoir
 \usepackage[us]{datetime}
-\newdate{startdate}{15}{3}{2020}
-\usepackage{enumitem}
-\setlist[itemize]{topsep=0pt, itemsep=.5\itemsep}
-\setlist[description]{topsep=0pt, itemsep=.5\itemsep}
-\setlist[enumerate]{topsep=0pt, itemsep=.5\itemsep}
-
-\usepackage{expex, tikzvowel, phonrule, tikztone}
-
 \usepackage[hidelinks]{hyperref}
-\hypersetup{linktoc=all}
+\usepackage{enumitem}
 
-\titlingpageend{\clearforchapter}{\clearforchapter} %! Titlingpage/openany fix for blank page
+%? Date handling
+\newdate{startdate}{15}{3}{2020}
+
+%? Layout
+\setcounter{chapter}{-1}
+
+%* Page numbering
 \pagestyle{ruled}
-\makeevenfoot{ruled}{}{}{\thepage}
-\makeoddfoot{ruled}{\thepage}{}{}
-\makeevenfoot{plain}{}{}{\thepage}
-\makeoddfoot{plain}{\thepage}{}{}
+\makeevenfoot{ruled}{\thepage}{}{}
+\makeoddfoot{ruled}{}{}{\thepage}
+\makeevenfoot{plain}{\thepage}{}{}
+\makeoddfoot{plain}{}{}{\thepage}
 
-\setmainfont{Libertinus Serif}
-
+%* Paragraph spacing
 \setlength{\parindent}{0pt}
 \nonzeroparskip
+
+%* Font
+\setmainfont{Libertinus Serif}
+
+%* ToC styling
 \renewcommand\cftdotsep{2.5}
 
-\lingset{
-  glstyle=nlevel,
-  belowglpreambleskip={-.5\parskip},
-  aboveglftskip={-.5\parskip},
-  exskip={0pt},
-  glneveryline={,\it,}
-}
+%* Margin notes
+\setlrmarginsandblock{3cm}{6cm}{*}
+\setlength{\marginparsep}{2em}
+\setlength{\marginparpush}{1em}
 
-% Doc specific stuff
-\newcommand{\langword}[1]{\textit{#1}}
+\checkandfixthelayout
+
+%? Shortcuts
+\newcommand{\phontext}[1]{[#1]}
+\newcommand{\phomtext}[1]{/#1/}
+\newcommand{\orthotext}[1]{\textlangle #1\textrangle}
+\newcommand{\aside}[1]{\marginpar{\raggedright\footnotesize #1}}
+
 \newcommand{\langname}{Ahale}
-\newcommand{\pronounced}[1]{\\[.5\parskip][#1]}
-\newcommand{\smoyd}[2]{\trailingcitation{\href{#2}{(\textsc{5moyd \##1})}}}
-\newcommand{\lit}[1]{\textsc{lit.} `#1'}
+\newcommand{\nativetext}[1]{\textit{#1}}
+\newcommand{\transtext}[1]{`#1'}
+
 \newcommand{\fleuron}{❧}
-\raggedbottomsection

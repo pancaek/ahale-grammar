@@ -2,8 +2,62 @@
 
 \chapter{Segmental Phonology}
 \section{Inventory}
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{*{7}{c}}
+    \toprule
+    & Labial & Alveolar & Velar & Glottal \\\midrule
+    Plosive   & p      & t        & k     & ʔ       \\
+    Nasal     & m      & n        &       &         \\
+    Fricative & ɸ      & s        & x     & h       \\
+    Sonorant  & w      & l        &       &         \\
+    \bottomrule
+  \end{tabular}
+  \caption{Consonant Inventory}
+  \label{table:consonants}
+\end{table}
+
+\aside{\fleuron The phone \phontext{e} may appear phonemic, (cf. \textsc{rel} and \textsc{assoc} \nativetext{ʔe})
+\medbreak
+In truth, the underlying form is identical: \phomtext{ʔə}. For the purposes of sound change, monosyllabic forms are stressed.
+}
+
+\begin{figure}[ht]
+  \centering
+  \begin{vowel}
+    \vpoint{0}{0}{i}
+    \vpoint{0}{2}{u}
+    \vpoint{1.5}{1}{ə}
+    \vpoint{3}{1}{a}
+    \varrow{a}{u}
+    \varrow{a}{i}
+  \end{vowel}
+  \caption{Phonemic Vowel Inventory}
+  \label{table:vowel_phonemes}
+\end{figure}
+\vfill %! This is not smart don't do this
 \section{Stress}
 \subsection{Assignment}
+Stress is generally assigned to the initial syllable of a root. However, \phomtext{ə} generally will not recieve stress at this stage and move to the second syllable (even if this is also a schwa).
+
+A subset of affixes (including, but not limited to those which utilize reduplication) are considered ``weak'', in that, like schwa, they repel stress.
+
+Such morphemes will be marked with a comma in morphemic transcription, rather than the usual period used at syllable boundaries. Thus \morphtext{ʔə,} refers to a morpheme \phomtext{ʔə} which repels stress.
+
 \subsection{Realization}
+
 \section{Allophony}
+Stressed \phomtext{ə} becomes \phontext{e}
+
+\phonc{ə}{e}{\phold\phonfeat{+stress}}
+
+% Consecutive syllables containing the same consonant undergo voicing disimilation such that the first is voiced. Nasals are not affected by this process as they are already voiced.
+
+% \phon{C\textsubscript{1}VC\textsubscript{1}V}{C\textsubscript{1}VC\textsubscript{1}\phonfeat{+voice}V}
+
+% A chain shift then occurred, eliding the voiceless syllable
+
+% \phon{C\textsubscript{1}VC\textsubscript{1}\phonfeat{+voice}V}{C\phonfeat{+voice}V}
+
 \chapter{Suprasegmental Phonology}

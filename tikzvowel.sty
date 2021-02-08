@@ -1,6 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{tikzvowel}[2014/08/21 Package to create vowel charts using tikz]
 \RequirePackage{tikz}
+\RequirePackage{pagecolor}
 
 \def\tv@V(#1,#2){barycentric cs:hf={(3-#1)*(2-#2)},hb={(3-#1)*#2},lf={#1*(2-#2)},lb={#1*#2}}
 
@@ -35,7 +36,7 @@
 {\let\vpoint\tv@vpoint\let\vblob\tv@vowelblob\let\varrow\tv@vowelarrow
   \begin{tikzpicture}[#1]
     \tikzset{
-      dot/.style={fill=white,minimum size=3.5ex,inner sep=0pt,outer sep=0pt},
+      dot/.style={circle,fill=\thepagecolor,minimum size=2.5ex,inner sep=0pt,outer sep=0pt}
     }
 
     \coordinate (hf) at (0,3); % high front

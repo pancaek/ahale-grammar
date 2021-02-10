@@ -3,8 +3,8 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 
+% \usepackage{xcolor}
 \usepackage{tikzvowel, phonrule}
-\usepackage{xcolor}
 
 %? Date handling
 \DTMsavedate{startdate}{2020-03-15}
@@ -40,8 +40,9 @@
 \checkandfixthelayout
 
 %* Lists
-
 \setlist{topsep=0pt, itemsep=.25em}
+\setlist[itemize]{label=---}
+
 %? Shortcuts
 \newcommand{\phontext}[1]{[#1]}
 \newcommand{\phomtext}[1]{/#1/}

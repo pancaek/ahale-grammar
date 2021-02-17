@@ -5,9 +5,9 @@
 %% The original source files were:
 %%
 %% baarux.dtx  (with options: `package')
-%% 
+%%
 %% Copyright 2020, 2021 Akam Chinjir
-%% 
+%%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
 %% of this license or (at your option) any later version.
@@ -15,17 +15,17 @@
 %% http://www.latex-project.org/lppl.txt
 %% and version 1.3 or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
-%% 
+%%
 %% This work has the LPPL maintenance status `maintained'.
-%% 
+%%
 %% The Current Maintainer of this work is Akam Chinjir.
-%% 
+%%
 %% This work consists of the files  baarux.tex and
 %%                                  baarux.sty.in
 %% and the derived files            baarux.dtx,
 %%                                  baarux.pdf, and
 %%                                  baarux.sty
-%% 
+%%
 \ProvidesPackage{baarux}[2021/02/10 v0.9.9 linguistics-style examples]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \RequirePackage{etoolbox,trimspaces}
@@ -216,6 +216,7 @@
 \let\baaru:if_meta\@firstoftwo
 \let\baaru:if_alttr\@firstoftwo
 \let\baaru:if_glosscmds\@firstoftwo
+\let\baaru:if_junctures\@firstoftwo
 \let\baaru:if_extra_glosscmds\@secondoftwo
 \let\baaru:if_contours\@secondoftwo
 \let\baaru:if_columns\@secondoftwo
@@ -244,6 +245,7 @@
 \DeclareOption{alttr}{\let\baaru:if_alttr\@firstoftwo}
 \DeclareOption{noalttr}{\let\baaru:if_alttr\@secondoftwo}
 \DeclareOption{glosscmds}{\let\baaru:if_glosscmds\@firstoftwo\let\baaru:if_extra_glosscmds\@secondoftwo}
+\DeclareOption{nojunctures}{\let\baaru:if_junctures\@secondoftwo}
 \DeclareOption{noglosscmds}{\let\baaru:if_glosscmds\@secondoftwo\let\baaru:if_extra_glosscmds\@secondoftwo}
 \DeclareOption{extraglosscmds}{\let\baaru:if_glosscmds\@firstoftwo\let\baaru:if_extra_glosscmds\@firstoftwo}
 \DeclareOption{contours}{\let\baaru:if_contours\@firstoftwo}
@@ -602,7 +604,7 @@
     \@tempdima\::baaru::labelwidthexesi\relax
     \sbox\z@{m}%
     \advance\@tempdima\wd\z@
-    \def\::baaru::labelwidthexesi{\the\@tempdima}%
+    \edef\::baaru::labelwidthexesi{\the\@tempdima}%
     \begingroup
     \baaru:set_for_ijal\baarulistii
     \baaru:set_for_ijal\baarulistiii
@@ -646,9 +648,12 @@
   \footnotesize
   \baaru:init_list_params\baarulisti@footnote\@listi
 \endgroup
-\appto\normalsize{\let\baarulisti\baarulisti@normal}%
-\appto\small{\let\baarulisti\baarulisti@small}%
-\appto\footnotesize{\let\baarulisti\baarulisti@footnote}%
+\appto\normalsize{\baarusetsize{normal}}
+\appto\small{\baarusetsize{small}}
+\appto\footnoteize{\baarusetsize{footnote}}
+\protected\def\baarusetsize#1{%
+  \letcs\baarulisti{baarulisti@#1}%
+}
 \AtBeginDocument{\let\baarulisti\baarulisti@normal}%
 \let\::baaru::optarg\baarucolon@c
 \let\baaru:optarg\baarucolon@m
@@ -901,14 +906,15 @@
     \let\baaru:endsubexamples\endexamples
     \examples[#1]
     \ex
-      \begin{examples}
+      \examples
   \else
     \let\baaru:endsubexamples\relax
     \ex
-      \begin{examples}[#1]
+      \examples[#1]
   \fi
 }{%
-  \end{examples}
+  \baaru:if_in_ex{\baaru:close_example}{}%
+  \endexamples
   \baaru:endsubexamples
 }%
 \protected\def\baarucols#1{%
@@ -918,6 +924,9 @@
     \ifnum\baaru:exdepth=\z@
       \BaaruError{\string\baarucols\space can only be used in an examples environment}\@eha
     \else
+      \expandafter\advance\csname c@\baaru:excounter\endcsname\@ne
+      \baaru:maybe_adjust_labelwidth{\baaru:excounter}%
+      \expandafter\advance\csname c@\baaru:excounter\endcsname\m@ne
       \baaru:ncols#1\relax
       \baaru:colno\z@
       \count@\baaru:ncols
@@ -930,8 +939,8 @@
       \advance\baaru:column_width-\labelwidth
       \advance\baaru:column_width-\labelsep
       \baaru:linewidth\baaru:column_width
-      \let\baaru:ex@\baaru:ex@cols
-      \let\baaru:close_example\baaru:close_example@cols
+      \def\baaru:ex@{\baaru:ex@cols}%
+      \def\baaru:close_example{\baaru:close_example@cols}%
       \let\baaru:if_in_columns\@firstoftwo
     \fi
   }%
@@ -962,7 +971,10 @@
   \ifdim\prevdepth>\baaru:prevdepth
     \global\baaru:prevdepth\prevdepth
   \fi
+  \global\baaru:cached_width\labelwidth
   \end{minipage}%
+  \let\baaru:if_in_ex\@secondoftwo
+  \labelwidth\baaru:cached_width
   \advance\baaru:colno\@ne
   \ifnum\baaru:colno=\baaru:ncols
     \baaru:colno\z@
@@ -1047,7 +1059,7 @@
     \advance\@totalleftmargin\@tempdima
     \parshape\@ne\@totalleftmargin\baaru:linewidth
     \labelwidth\baaru:cur_label_wd
-    \typeout{[baarux] adjusted labelwidth to \the\labelwidth\space for example (\@currentlabel)\on@line}%
+    \typeout{(baarux) adjusted labelwidth to \the\labelwidth\space for example (\@currentlabel)\on@line}%
   \fi
   \global\setbox\@labels\hbox{%
     \baaru:if_ijal{}{\unhbox\@labels}%
@@ -1303,11 +1315,11 @@
     }%
     \cslet{::baaru::\expandafter\@gobble\string#1.orig}\:temp
   }{%
-    \csappto{baaru:activate::#2@\baaru:cur_style}{\catcode`#1=4\relax}%
+    \csappto{baaru:activate::#2@\baaru:cur_style}{\catcode`#1=04\relax}%
     \letcs\:temp{::baaru::#1.catcode}%
     \cseappto{baaru:deactivate::#2@\baaru:cur_style}{%
       \catcode`#1=\expandafter\noexpand
-      \csname ::baaru::#1.catcode\endcsname
+      0\csname ::baaru::#1.catcode\endcsname
       \relax
     }%
     \cslet{::baaru::#1.catcode}\:temp
@@ -1324,7 +1336,7 @@
     }%
     \if e\:temp
       \baaru:killcmd@env
-    \else if s\:temp
+    \else\if s\:temp
       \baaru:killcmd@scan
     \else\if g\:temp
       \baaru:killcmd@gloss
@@ -1333,7 +1345,7 @@
       \baaru:killcmd@lines@
     \else
       \BaaruError{\expandafter\string\:baaruname\space cannot be undefined or redefined}\@eha
-    \fi\fi\fi
+    \fi\fi\fi\fi
   }{%
     \BaaruError{\expandafter\string\:baaruname\space is undefined}\@eha
   }%
@@ -1342,7 +1354,7 @@
   \baaru:check_cs{#2}%
   \ifcsdef{baaru:defined::\expandafter\string\:baaruname @\baaru:cur_style}{%
     \edef\:temp{%
-      \csname baaru:defined:\expandafter\string\:baaruname @\baaru:cur_style\endcsname
+      \csname baaru:defined::\expandafter\string\:baaruname @\baaru:cur_style\endcsname
     }%
     \if l\:temp
       \baaru:foreach\baaru:killcmd@one_line{#1}%
@@ -1360,6 +1372,11 @@
   \baaru:unregister_cmd{scan}%
   \expandafter\baaru:unregister_cmd@\csname baaru:activate::env@\baaru:cur_style\endcsname
 }
+\def\baaru:killcmd@scan{%
+  \csundef{baaru:defined::\expandafter\string\:baaruname @\baaru:cur_style}%
+  \csundef{baaru:cmd::\expandafter\string\:baaruname @\baaru:cur_style}%
+  \baaru:unregister_cmd{scan}%
+}
 \def\baaru:killcmd@gloss{%
   \csundef{baaru:defined::\expandafter\string\:baaruname @\baaru:cur_style}%
   \csundef{baaru:cmd::\expandafter\string\:baaruname @\baaru:cur_style}%
@@ -1371,8 +1388,10 @@
   \baaru:unregister_cmd{gloss}%
 }
 \def\baaru:killcmd@one_line#1{%
-  \csundef{baaru:cmd::\expandafter\string\:baaruname @#1@\baaru:cur_style}%
-  \baaru:unregister_cmd{line@#1}%
+  \ifcsdef{baaru:cmd::\expandafter\string\:baaruname @#1@\baaru:cur_style}{%
+    \csundef{baaru:cmd::\expandafter\string\:baaruname @#1@\baaru:cur_style}%
+    \baaru:unregister_cmd{line@#1}%
+  }{}%
 }
 \def\baaru:killcmd@lines@{%
   \csundef{baaru:defined::\expandafter\string\:baaruname @\baaru:cur_style}%
@@ -1394,7 +1413,6 @@
     \let\let\baaru:no_kill@cs
   }%
   \edef#1{#1}%
-  \edef\temp{\expandonce#1}%
   \baaru:cached_let\let\baaru:cached_let
   \let\catcode\baaru:cached_catcode
   \baaru:if_cs{%
@@ -1402,15 +1420,15 @@
   }{}%
 }
 \def\baaru:no_kill@cs#1#2{\unexpanded{\let#1#2}}
-\def\baaru:no_kill@char#1#2=#3\relax{\unexpanded{\catcode#1#2=#3\relax}}
+\def\baaru:no_kill@char#1#2=0#3\relax{\unexpanded{\catcode#1#2=0#3\relax}}
 \def\baaru:maybe_kill@cs#1#2{%
   \ifx#1\:baaruname\else
     \unexpanded{\let#1#2}%
   \fi
 }
-\def\baaru:maybe_kill@char#1#2=#3\relax{%
+\def\baaru:maybe_kill@char#1#2=0#3\relax{%
   \if#2\:baaruname\else
-    \unexpanded{\catcode#1#2=#3\relax}%
+    \unexpanded{\catcode#1#2=0#3\relax}%
   \fi
 }
 \csedef{baaru:cmd::\string\begin}{%
@@ -1424,9 +1442,8 @@
 \def\baaruex{%
   \baaru:if_in_ex{%
     \baaru:close_example
-  }{%
-    \let\baaru:if_in_ex\@firstoftwo
-  }%
+  }{}%
+  \let\baaru:if_in_ex\@firstoftwo
   \let\baaru:close_to_outer\relax
   \edef\baaru:cur_par{\::baaru::preamblepar}%
   \baaru:if_suppress_labels{%
@@ -1452,6 +1469,7 @@
   \baaru:if_scanning{%
     \endgroup
   }{}%
+  \let\baaru:if_in_ex\@secondoftwo
 }
 \csdef{baaru:cmd::&}{%
   \baaru:if_in_gloss{%
@@ -2728,7 +2746,11 @@
 }
 \def\baaru:fit_cols{%
   \baaru:fit_one_col
-  \baaru:fit_cols@iterate
+  \ifdim\baaru:remaining_width<\z@
+    \PackageWarning{baarux}{not enough room for even one cell,\MessageBreak expect hbox badness}%
+  \else
+    \expandafter\baaru:fit_cols@iterate
+  \fi
   \baaru:lastX\baaru:curX
 }
 \def\baaru:fit_one_col{%
@@ -2856,6 +2878,11 @@
   \else
     \baaru:target_delta\baaru:max_delta
   \fi
+  \ifdim\baaru:max_delta>\z@
+    \expandafter\baaru:stretch@
+  \fi
+}
+\def\baaru:stretch@{%
   \baaru:target_delta_gaps\dimexpr \baaru:max_delta_gaps * \baaru:target_delta / \baaru:max_delta\relax
   \baaru:target_delta_cols\dimexpr \baaru:target_delta - \baaru:target_delta_gaps\relax
   \baaru:curX\baaru:baseX
@@ -2931,7 +2958,7 @@
       \ifdim\@tempdima<\csname baaru:natwd::\csname baaru:multicol_cell::row@\the\baaru:counta\endcsname @\baaru:cur_coldata_id\endcsname
         \PackageWarning{baarux}{Right justification has made a multicolumn
           cell\MessageBreak too small for its contents. If the results are
-          \MesageBreak bade, maybe use the setting norightjustify}%
+          \MessageBreak bade, maybe use the setting norightjustify}%
       \fi
       \xdef\:next{%
         \def\expandafter\noexpand\csname baaru:multicol_cell::colwd@\the\baaru:counta\endcsname{%
@@ -4196,8 +4223,10 @@
     \baaru:if_glosscmds{%
       \newbaarucmd[bits]{[}{\baaruopenbracket[}%
       \newbaarucmd[bits]{]}{\baaruclosebracket]}%
-      \newbaarucmd[bits]{=}{\baarujuncture{\texttt{=}}}%
-      \newbaarucmd[bits]{-}{\baarujuncture-}%
+      \baaru:if_junctures{%
+        \newbaarucmd[bits]{=}{\baarujuncture{\texttt{=}}}%
+        \newbaarucmd[bits]{-}{\baarujuncture-}%
+      }{}%
       \newbaarucmd{##}{\baarugetpos}%
       \newbaarucmd{\MC}{\baarumulticol}%
       \newbaarucmd{\\}{\baaruwrap}%
@@ -4225,8 +4254,10 @@
       \baarudefforrow{0}{%
         \newbaarucmd[glossa]{[}{\baaruopenbracket[}%
         \newbaarucmd[glossa]{]}{\baaruclosebracket]}%
-        \newbaarucmd[glossa]{=}{\baarujuncture{\texttt{=}}}%
-        \newbaarucmd[glossa]{-}{\baarujuncture-}%
+        \baaru:if_junctures{%
+          \newbaarucmd[glossa]{=}{\baarujuncture{\texttt{=}}}%
+          \newbaarucmd[glossa]{-}{\baarujuncture-}%
+        }{}%
         \baaru:if_extra_glosscmds{%
           \newbaarucmd{\t}{\baaruemptyelement{t}}%
         }{}%
@@ -4256,8 +4287,10 @@
       \baarudefforrow{1}{%
         \newbaarucmd[glossa,glossb]{[}{\baaruopenbracket[}%
         \newbaarucmd[glossa,glossb]{]}{\baaruclosebracket]}%
-        \newbaarucmd[glossa,glossb]{=}{\baarujuncture{\texttt{=}}}%
-        \newbaarucmd[glossa,glossb]{-}{\baarujuncture-}%
+        \baaru:if_junctures{%
+          \newbaarucmd[glossa,glossb]{=}{\baarujuncture{\texttt{=}}}%
+          \newbaarucmd[glossa,glossb]{-}{\baarujuncture-}%
+        }{}%
         \baaru:if_extra_glosscmds{%
           \newbaarucmd[glossa]{\t}{\baaruemptyelement{t}}%
         }{}%

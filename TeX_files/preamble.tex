@@ -7,10 +7,12 @@
 \usepackage{enumitem}
 
 %? Ling stuff
+\usepackage[nostandards]{baabbrevs}
 \usepackage[2level]{baarux}
 \usepackage{tikzvowel, phonrule}
 \baaruset{tr.markup=\baarusquote}
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}\footnotesize}
+\setbaaruabbrevseps{.:-()<>}
 
 %? Date handling
 \DTMsavedate{startdate}{2020-03-15}
@@ -55,10 +57,11 @@
 \newcommand{\orthotext}[1]{\textlangle #1\textrangle}
 \newcommand{\nativetext}[1]{\textit{#1}}
 \newcommand{\transtext}[1]{`#1'}
-\newcommand{\aside}[1]{\marginpar{\raggedright\footnotesize #1}}
 \newcommand{\notabletext}[1]{\textbf{#1}}
 
+\newcommand{\aside}[1]{\marginpar{\raggedright\footnotesize #1}}
 \newcommand{\fleuron}{❧}
+\newcommand{\allo}{\textasciitilde}
 
 %textoverline
 % \makeatletter

@@ -24,6 +24,12 @@
 %? Layout
 \setcounter{chapter}{-1}
 
+%* Phonetic rules spacing
+\let\origphonc\phonc
+\def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}
+\let\origphon\phon
+\def\phon{\setlength{\tabcolsep}{3pt}\origphon}
+
 %* Page numbering
 \pagestyle{ruled}
 \makeevenfoot{ruled}{\thepage}{}{}

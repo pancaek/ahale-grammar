@@ -5,9 +5,9 @@
 %% The original source files were:
 %%
 %% baarux.dtx  (with options: `package')
-%%
+%% 
 %% Copyright 2020, 2021 Akam Chinjir
-%%
+%% 
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
 %% of this license or (at your option) any later version.
@@ -15,17 +15,17 @@
 %% http://www.latex-project.org/lppl.txt
 %% and version 1.3 or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
-%%
+%% 
 %% This work has the LPPL maintenance status `maintained'.
-%%
+%% 
 %% The Current Maintainer of this work is Akam Chinjir.
-%%
+%% 
 %% This work consists of the files  baarux.tex and
 %%                                  baarux.sty.in
 %% and the derived files            baarux.dtx,
 %%                                  baarux.pdf, and
 %%                                  baarux.sty
-%%
+%% 
 \ProvidesPackage{baarux}[2021/02/10 v0.9.9 linguistics-style examples]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \RequirePackage{etoolbox,trimspaces}
@@ -115,6 +115,7 @@
 \newcount\baaru:blockno
 \newcount\baaru:autoidx
 \newcount\baaru:contouridx
+\newcount\baaru:chapterno
 \newcount\baaru:ncols\baaru:ncols\@ne
 \newcount\baaru:colno
 \newtoks\baaru:buffer
@@ -149,6 +150,7 @@
 \let\baaru:if_in_footnote\@secondoftwo
 \let\baaru:if_in_ex\@secondoftwo
 \let\baaru:if_scanning\@secondoftwo
+\let\baaru:if_was_scanning\@secondoftwo
 \let\baaru:if_in_gloss\@secondoftwo
 \let\baaru:if_in_cells\@secondoftwo
 \let\baaru:if_in_nlevel\@secondoftwo
@@ -425,112 +427,79 @@
     \:hook
   }%
 }
-\def\baaru:set_max_label#1#2{%
-  \setbox\z@\hbox{%
-    \csname ::baaru::label#1\endcsname{%
-      #2%
-    }%
-  }%
-  \ifdim\wd\z@>\csname ::baaru::labelwidth#1\endcsname\relax
-    \csedef{::baaru::labelwidth#1}{%
-      \the\wd\z@
-    }%
-    \ifnum\baaru:exdepth=\z@\else
-      \@tempdima-\labelwidth
-      \labelwidth\csname ::baaru::labelwidth#1\endcsname
-      \advance\@tempdima\labelwidth
-      \advance\leftmargin\@tempdima
-      \advance\linewidth-\@tempdima
-      \baaru:linewidth\linewidth
-      \advance\@totalleftmargin\@tempdima
-      \parshape\@ne\@totalleftmargin\baaru:linewidth
-    \fi
-  \fi
-}
-\def\::baaru::labelwidthexesi{0em}%
-\def\::baaru::labelwidthfnexesi{0em}%
-\def\::baaru::labelwidthexesii{0em}%
-\def\::baaru::labelwidthexesiii{0em}%
-\def\::baaru::labelwidthexesiv{0em}%
-\def\::baaru:set::maxlabelexesi#1{\baaru:set_max_label{exesi}{#1}}
-\def\::baaru:set::maxlabelfnexesi#1{\baaru:set_max_label{fnexesi}{#1}}
-\def\::baaru:set::maxlabelexesii#1{\baaru:set_max_label{exesii}{#1}}
-\def\::baaru:set::maxlabelexesiii#1{\baaru:set_max_label{exesiii}{#1}}
-\def\::baaru:set::maxlabelexesiv#1{\baaru:set_max_label{exesiiv}{#1}}
+\def\::baaru:set::labelwidthexesi#1{\def\::baaru::labelwidthexesi{#1}\let\baaru:manual_labelwidthexesi\relax}
+\def\::baaru::labelwidthfnexesi{2em}
+\def\::baaru::labelwidthexesii{1.2em}
+\def\::baaru::labelwidthexesiii{1.37em}
+\def\::baaru::labelwidthexesiv{1.2em}
 \def\setbaarulabelwidth#1{%
   \ifnum\baaru:exdepth=\z@
     \baaru:if_in_footnote{%
-      \def\::baaru::labelwidthfnexesi{#1}
+      \def::baaru::labelwidthfnexesi{#1}%
     }{%
-      \def\::baaru::labelwidthexesi{#1}%
+      \::baaru:set::labelwidthexesi{#1}%
     }%
   \else
-    \csdef{::baaru::labelwidth\baaru:excounter}{#1}%
+    \ifcsdef{::baaru:set::labelwidth\baaru:excounter}{%
+      \csname ::baaru:set::labelwidth\baaru:excounter\endcsname{#1}%
+    }{%
+      \csdef{::baaru::labelwidth\baaru:excounter}{#1}%
+    }%
   \fi
 }
 \def\::baaru:set::labelwidth#1{%
   \setbaarulabelwidth{#1}%
 }
+\def\baaru:set_max_label#1#2#3{%
+  \setbox\z@\hbox{%
+    \csname ::baaru::label#2\endcsname{%
+      #3%
+    }%
+  }%
+  #1\csedef{::baaru::labelwidth#2}{\the\wd\z@}%
+}
+\def\::baaru:set::maxlabelexesi#1{\baaru:set_max_label\relax{exesi}{#1}\let\baaru:manual_labelwidthexesi\relax}
+\def\::baaru:set::maxlabelfnexesi#1{\baaru:set_max_label\relax{fnexesi}{#1}}
+\def\::baaru:set::maxlabelexesii#1{\baaru:set_max_label\relax{exesii}{#1}}
+\def\::baaru:set::maxlabelexesiii#1{\baaru:set_max_label\relax{exesiii}{#1}}
+\def\::baaru:set::maxlabelexesiv#1{\baaru:set_max_label\relax{exesiiv}{#1}}
 \def\setbaarumaxlabel#1{%
   \ifnum\baaru:exdepth=\z@
     \baaru:if_in_footnote{%
-      \baaru:set_max_label{fnexesi}{#1}%
+      \::baaru:set::maxlabelfnexesi{#1}%
     }{%
-      \baaru:set_max_label{exesi}{#1}%
+      \::baaru:set::maxlabelexesi{#1}%
     }%
   \else
-    \baaru:set_max_label{\baaru:excounter}{#1}%
+    \csname ::baaru:set::maxlabel\baaru:excounter\endcsname{#1}%
   \fi
 }
 \def\::baaru:set::maxlabel#1{%
   \setbaaarumaxlabel{#1}%
 }
-\def\setbaarucounterhook#1#2#3{%
-  \csdef{baaru:counter_hook::#1@#2}{#3}%
-}
-\def\killbaarucounterhook#1#2{%
-  \csundef{baaru:counter_hook::#1@#2}%
-}
-\def\updatebaarumaxlabel#1#2{%
-  \baaru:set_max_label{#1}{#2}%
-  \csxdef{::baaru::labelwidth#1}{\the\labelwidth}%
-}
-\setbaarucounterhook{exesi}{1}{%
-  \baaru:if_ijal{%
-    \updatebaarumaxlabel{exesi}{88m$'$}%
+\def\baaru:maybe_init_labelwidth{%
+  \let\baaru:if\@secondoftwo
+  \ifdef\::baaru::labelwidthexesi{%
+    \ifdef\baaru:manual_labelwidthexesi{}{%
+      \baaru:if_use_chapter_labels{%
+        \ifnum\c@exesi=\z@
+          \ifnum\baaru:chapterno=\c@chapter\else
+            \let\baaru:if\@firstoftwo
+          \fi
+        \fi
+      }{}%
+    }%
   }{%
-    \updatebaarumaxlabel{exesi}{88$'$}%
-  }%
-}
-\setbaarucounterhook{exesi}{100}{%
-  \baaru:if_ijal{%
-    \updatebaarumaxlabel{exesi}{888m$'$}%
+    \let\baaru:if\@firstoftwo
+  }
+  \baaru:if{%
+    \baaru:set_max_label\global{exesi}{\baaru:if_ijal{88m$'$}{88$'$}}%
   }{%
-    \updatebaarumaxlabel{exesi}{888$'$}%
+    \ifnum\c@exesi=99 % called before the counter gets incremented
+    \baaru:set_max_label\global{exesi}{\baaru:if_ijal{88m$'$}{888$'$}}%
+    \fi
   }%
 }%
-\setbaarucounterhook{exesi}{1000}{%
-  \baaru:if_ijal{%
-    \updatebaarumaxlabel{exesi}{8888a$'$}%
-  }{%
-    \updatebaarumaxlabel{exesi}{8888$'$}%
-  }%
-}
-\setbaarucounterhook{fnexesi}{1}{%
-  \baaru:if_ijal{%
-    \updatebaarumaxlabel{fnexesi}{iiim$'$}%
-  }{%
-    \updatebaarumaxlabel{fnexesi}{iii$'$}%
-  }%
-}
-\setbaarucounterhook{exesii}{1}{\baaru:if_ijal{}{\updatebaarumaxlabel{exesii}{m}}}
-\setbaarucounterhook{exesiii}{1}{\baaru:if_ijal{}{\updatebaarumaxlabel{exesiii}{iii}}}
-\setbaarucounterhook{exesiv}{1}{\baaru:if_ijal{}{\updatebaarumaxlabel{exesiv}{M}}}
-\def\baaru:maybe_adjust_labelwidth#1{%
-  \ifcsdef{baaru:counter_hook::#1@\expandafter\the\csname c@#1\endcsname}{%
-    \csname baaru:counter_hook::#1@\expandafter\the\csname c@#1\endcsname\endcsname
-  }{}%
-}
 \def\::baaru::judgmentpresep{0.3em}
 \def\::baaru::judgmentpostsep{0.08333em}
 \def\::baaru::labelsep{1em}
@@ -601,10 +570,12 @@
     \def\::baaru::labelexesiv##1{%
       \::baaru::labelexesi{\p@exesiv##1}%
     }%
-    \@tempdima\::baaru::labelwidthexesi\relax
-    \sbox\z@{m}%
-    \advance\@tempdima\wd\z@
-    \edef\::baaru::labelwidthexesi{\the\@tempdima}%
+    \ifdef\::baaru::labelwidthexesi{%
+      \@tempdima\::baaru::labelwidthexesi\relax
+      \sbox\z@{m}%
+      \advance\@tempdima\wd\z@
+      \edef\::baaru::labelwidthexesi{\the\@tempdima}%
+    }{}%
     \begingroup
     \baaru:set_for_ijal\baarulistii
     \baaru:set_for_ijal\baarulistiii
@@ -816,11 +787,19 @@
 \@addtoreset{exesiv}{exesiii}
 \def\baaruexno#1{%
   \refstepcounter{#1}%
-  \baaru:maybe_adjust_labelwidth{#1}%
   \csname ::baaru::label#1\endcsname{\csname the#1\endcsname}%
 }
 \newenvironment{examples}[1][]{%
-  \let\baaru:if_in_ex\@secondoftwo
+  \baaru:if_in_ex{%
+    \baaru:close_to_outer
+    \baaru:if_scanning{%
+      \csname baaru:deactivate::scan@\baaru:cur_style\endcsname
+      \csname baaru:activate::env@\baaru:cur_style\endcsname
+      \let\baaru:if_scanning\@secondoftwo
+      \let\baaru:if_was_scanning\@firstoftwo
+    }{}%
+    \let\baaru:if_in_ex\@secondoftwo
+  }{}%
   \ifnum\@listdepth>5\relax
     \@toodeep
   \else
@@ -836,6 +815,7 @@
         }{%
           \def\baaru:excounter{exesi}%
           \let\thetopexes\theexesi
+          \baaru:maybe_init_labelwidth
         }%
         \labelsep\::baaru::labelsep\relax
       \else
@@ -885,6 +865,9 @@
   \baaru:if_in_ex{\baaru:close_example}{}%
   \endtrivlist
   \global\advance\@listdepth\m@ne
+  \baaru:if_was_scanning{%
+    \endgroup
+  }{}%
   \allowbreak
 }
 \newenvironment{example}[1][]{%
@@ -924,9 +907,6 @@
     \ifnum\baaru:exdepth=\z@
       \BaaruError{\string\baarucols\space can only be used in an examples environment}\@eha
     \else
-      \expandafter\advance\csname c@\baaru:excounter\endcsname\@ne
-      \baaru:maybe_adjust_labelwidth{\baaru:excounter}%
-      \expandafter\advance\csname c@\baaru:excounter\endcsname\m@ne
       \baaru:ncols#1\relax
       \baaru:colno\z@
       \count@\baaru:ncols
@@ -956,9 +936,11 @@
   \fi
   \baaru:parskip\parskip
   \baaru:counta\@listdepth
+  \let\baaru:par@saved\par
   \begin{minipage}[t]{\baaru:column_width}%
     \parskip\baaru:parskip
     \parshape\@ne\@totalleftmargin\baaru:column_width
+    \let\par\baaru:par@saved
     \@listdepth\baaru:counta
     \baaru:itemlabel
 }
@@ -1032,7 +1014,6 @@
     \@noitemargfalse
     \baaru:hyperref:its_refstepcounter
     \refstepcounter\baaru:excounter
-    \baaru:maybe_adjust_labelwidth{\baaru:excounter}%
   \else
     \ifblank{#1}{}{%
       \protected@edef\@currentlabel{#1}%
@@ -1666,7 +1647,7 @@
 \long\def\baaru:add_to_buffer#1{%
   \ifdef\baaru:cur_line{}{%
     \BaaruError{You've got some text between lines,\MessageBreak
-     probably after \string\baarucontd}\@ehb
+      maybe after \string\baarucontd\space or \string\baarupar}\@ehb
   }%
   \ifcase\csname baaru:scan_state::\baaru:scan_state @type\endcsname
     % empty
@@ -3136,6 +3117,13 @@
     \BaaruError{\string\baarucontd\space can be used only in glosses}\@eha
   }%
 }%
+\def\baarupar{%
+  \baaru:close_to_outer
+  \par\nobreak
+  \global\let\baaru:if_preempt_newline\@firstoftwo
+  \let\baaru:close_to_outer\relax
+  \baaru:scan
+}
 \def\baaru:update_data_list#1#2#3#4{%
   \expandafter\def\expandafter\:list\expandafter{\csname #1\endcsname}%
   \expandafter\ifx\:list\relax

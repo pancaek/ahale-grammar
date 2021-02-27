@@ -72,6 +72,6 @@
 \newcommand{\transtext}[1]{`#1'}
 \newcommand{\notabletext}[1]{\textbf{#1}}
 
-\newcommand{\aside}[1]{\marginpar{\raggedright\footnotesize #1}}
+\newcommand{\aside}[1]{\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \footnotesize #1}}
 \newcommand{\fleuron}{❧}
 \newcommand{\allo}{\textasciitilde}

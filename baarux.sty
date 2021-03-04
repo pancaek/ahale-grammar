@@ -233,7 +233,6 @@
 }{%
   \let\baaru:if_leipzig\@secondoftwo
 }%
-\let\baaru:if_leipzig\@secondoftwo
 \let\baaru:if_reset_for_chapters\baaru:if_has_chapters
 \let\baaru:if_use_chapter_labels\baaru:if_has_chapters
 \let\baaru:if_pars\@firstoftwo
@@ -889,15 +888,14 @@
     \let\baaru:endsubexamples\endexamples
     \examples[#1]
     \ex
-      \examples
+      \begin{examples}%
   \else
     \let\baaru:endsubexamples\relax
     \ex
-      \examples[#1]
+      \begin{examples}[#1]
   \fi
 }{%
-  \baaru:if_in_ex{\baaru:close_example}{}%
-  \endexamples
+  \csname ::baaru::end.orig\endcsname{examples}%
   \baaru:endsubexamples
 }%
 \protected\def\baarucols#1{%
@@ -2422,75 +2420,57 @@
   }{}%
 }%
 \def\baaru:shift_for_unglossed{%
-  \ifnum\baaru:ncols>\baaru:curX
-    \baaru:counta\baaru:ncols
-    \baaru:countb\baaru:counta
-    \loop\ifnum\baaru:counta>\baaru:curX
-      \advance\baaru:countb\m@ne
-      \csedef{baaru:coldata::id@\the\baaru:counta}{%
-        \csname baaru:coldata::id@\the\baaru:countb\endcsname
-      }%
-      \advance\baaru:counta\m@ne
-    \repeat
-    \csundef{baaru:coldata::id@\the\baaru:curX}%
+  \baaru:counta\baaru:ncols
+  \ifnum\baaru:counta=\z@
+    \advance\baaru:curX\@ne
     \baaru:init_coldata_id
+    \baaru:counta\baaru:curX
+    \advance\baaru:curX\m@ne
+  \fi
+  \baaru:countb\baaru:counta
+  \loop\ifnum\baaru:counta>\baaru:curX
+    \advance\baaru:countb\m@ne
+    \csedef{baaru:coldata::id@\the\baaru:counta}{%
+      \csname baaru:coldata::id@\the\baaru:countb\endcsname
+    }%
+    \advance\baaru:counta\m@ne
+  \repeat
+  \ifnum\baaru:ncols>\z@
     \advance\baaru:ncols\@ne
-    % add the content
-    \ifx\baaru:auto_content\@empty\else
-      \baaru:counta\z@
-      \baaru:if_in_nlevel{%
-        \baaru:countb\baaru:baseY
-      }{%
-        \baaru:countb\baaru:curY
-      }%
-      \loop\ifnum\baaru:counta<\baaru:countb
+  \fi
+  \csundef{baaru:coldata::id@\the\baaru:curX}%
+  \baaru:init_coldata_id
+  \baaru:counta\baaru:curX
+  \advance\baaru:counta\@ne
+  \edef\@tempa{\csname baaru:coldata::id@\the\baaru:counta\endcsname}%
+  \csname baaru:coldata::if_wrap@\@tempa\endcsname{%
+    \cslet{baaru:coldata::if_wrap@\baaru:cur_coldata_id}\@firstoftwo
+    \cslet{baaru:coldata::if_wrap@\@tempa}\@secondoftwo
+  }{}%
+  \csname baaru:coldata::if_nowrap@\@tempa\endcsname{%
+    \cslet{baaru:coldata::if_nowrap@\baaru:cur_coldata_id}\@firstoftwo
+    \cslet{baaru:coldata::if_nowrap@\@tempa}\@secondoftwo
+  }{}%
+  \csname baaru:coldata::gap@\baaru:cur_coldata_id\endcsname\csname baaru:coldata::gap@\@tempa\endcsname
+  \csname baaru:coldata::gap@\@tempa\endcsname\::baaru::cellspacing\relax
+  % add the content
+  \ifx\baaru:auto_content\@empty\else
+    \baaru:counta\z@
+    \baaru:if_in_nlevel{%
+      \baaru:countb\baaru:baseY
+      \advance\baaru:countb\baaru:lastNlevelY
+    }{%
+      \baaru:countb\baaru:curY
+    }%
+    \loop\ifnum\baaru:counta<\baaru:countb
+      \ifnum\baaru:counta=\baaru:curY\else
         \ifcsdef{baaru:multicol::base@\the\baaru:counta @\baaru:cur_coldata_id}{}{%
           \csedef{baaru:cell::\the\baaru:counta @\baaru:cur_coldata_id}{\expandonce\baaru:auto_content}%
         }%
-        \advance\baaru:counta\@ne
-      \repeat
-    \fi
-  \fi
-  % nlevel
-  \baaru:if_in_nlevel{%
-    \edef\:temp{\baaru:cur_coldata_id}%
-    \advance\baaru:curX\@ne
-    \baaru:init_coldata_id
-    \baaru:counta\baaru:baseY
-    \loop\ifnum\baaru:counta<\baaru:curY
-      \ifcsdef{baaru:cell::\the\baaru:counta @\:temp}{%
-        \csedef{baaru:cell::\the\baaru:counta @\baaru:cur_coldata_id}{%
-          \expandafter\expandonce\csname baaru:cell::\the\baaru:counta @\:temp\endcsname
-        }%
-        \csundef{baaru:cell::\the\baaru:counta @\:temp}%
-      }{%
-        \ifcsdef{baaru:multicol_cell::id:\the\baaru:counta @\:temp}{%
-          \csedef{baaru:multicol_cell::id:\the\baaru:counta @\baaru:cur_coldata_id}{%
-            \expandafter\expandonce\csname baaru:multicol_cell::id:\the\baaru:counta @\:temp\endcsname
-          }%
-          \csundef{baaru:multicol_cell::id:\the\baaru:counta @\:temp}%
-        }{}%
-      }%
+      \fi
       \advance\baaru:counta\@ne
     \repeat
-    \advance\baaru:curX\m@ne
-    \baaru:init_coldata_id@nocheck
-    \ifx\baaru:auto_content\@empty\else
-      \baaru:counta\baaru:baseY
-      \baaru:countb\z@
-      \loop\ifnum\baaru:countb<\baaru:lastNlevelY
-        \ifnum\baaru:counta=\baaru:curY\else
-          \ifcsdef{baaru:multicol::base@\the\baaru:counta @\baaru:cur_coldata_id}{}{%
-            \csedef{baaru:cell::\the\baaru:counta @\baaru:cur_coldata_id}{%
-              \expandonce\baaru:auto_content
-            }%
-          }%
-        \fi
-        \advance\baaru:counta\@ne
-        \advance\baaru:countb\@ne
-      \repeat
-    \fi
-  }{}%
+  \fi
   % multicols
   \baaru:counta\z@
   \loop\ifnum\baaru:counta<\baaru:n_multicols
@@ -3188,7 +3168,9 @@
 \def\baaru:getpos#1#2{%
   \ifcsdef{baaru:adjust_point@l@#2}{%
     \ifx#1\relax\newdimen#1\fi
-    \baaru:update_data_list{baaru:point_requests}{gloss}{\baaru:resolve_point_requests}{#1#2{\baaru:cur_coldata_id}{\the\baaru:curY}}%
+    \appto\baaru:pre_cell_hook{%
+      \baaru:update_data_list{baaru:point_requests}{gloss}{\baaru:resolve_point_requests}{#1#2{\baaru:cur_coldata_id}{\the\baaru:curY}}%
+    }%
   }{%
     \BaaruError{Unknown point alignment `#2'}\@eha
   }%
@@ -3799,7 +3781,7 @@
       \advance\baaru:curX\@ne
     }{%
       \ifcsdef{baaru:multicol_cell::id:\the\baaru:curY @\baaru:cur_coldata_id}{%
-        \baaru:counta\csname baaru:multicol_cell::id:\the\baaru:curY @\baaru:cur_coldata_id\endcsname
+        \baaru:counta\csname baaru:multicol_cell::id:\the\baaru:curY @\baaru:cur_coldata_id\endcsname\relax
         \expandafter\baaru:parse_abbrevs@\csname baaru:multicol_cell::\the\baaru:counta\endcsname
         \advance\baaru:curX\csname baaru:multicol_cell::span@\the\baaru:counta\endcsname
       }{%

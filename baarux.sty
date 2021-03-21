@@ -5,9 +5,9 @@
 %% The original source files were:
 %%
 %% baarux.dtx  (with options: `package')
-%% 
+%%
 %% Copyright 2020, 2021 Akam Chinjir
-%% 
+%%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
 %% of this license or (at your option) any later version.
@@ -15,18 +15,18 @@
 %% http://www.latex-project.org/lppl.txt
 %% and version 1.3 or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
-%% 
+%%
 %% This work has the LPPL maintenance status `maintained'.
-%% 
+%%
 %% The Current Maintainer of this work is Akam Chinjir.
-%% 
+%%
 %% This work consists of the files  baarux.tex and
 %%                                  baarux.sty.in
 %% and the derived files            baarux.dtx,
 %%                                  baarux.pdf, and
 %%                                  baarux.sty
-%% 
-\ProvidesPackage{baarux}[2021/02/10 v0.9.9 linguistics-style examples]
+%%
+\ProvidesPackage{baarux}[2021/03/12 v0.9.10 linguistics-style examples]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \RequirePackage{etoolbox,trimspaces}
 \let\baarucolon@c=:
@@ -93,6 +93,12 @@
 \def\baaru:foritem#1#2&#3\:delim{%
   #1{#2}%
 }
+\def\baaru:append#1#2{%
+  \expandafter\def\expandafter#1\expandafter{#1#2}%
+}
+\def\baaru:csappend#1{%
+  \expandafter\baaru:append\csname #1\endcsname
+}%
 \newcount\baaru:counta
 \newcount\baaru:countb
 \newcount\baaru:countc
@@ -165,6 +171,15 @@
 }{%
   \let\baaru:if_has_chapters\@secondoftwo
 }
+\@ifpackageloaded{leipzig}{%
+  \ifdef\Compl{%
+    \let\baaru:if_leipzig\@firstoftwo
+  }{%
+    \let\baaru:if_leipzig\@secondoftwo
+  }
+}{%
+  \let\baaru:if_leipzig\@secondoftwo
+}%
 \def\newbaaruscanstate#1#2#3#4{%
   \csdef{baaru:scan_state::#1}{#1}%
   \csdef{baaru:scan_state::#1@type}{#2}%
@@ -224,15 +239,6 @@
 \let\baaru:if_columns\@secondoftwo
 \let\baaru:if_abbrevs\@firstoftwo
 \let\baaru:if_stdabbrevs\@firstoftwo
-\@ifpackageloaded{leipzig}{%
-  \ifdef\Compl{%
-    \let\baaru:if_leipzig\@firstoftwo
-  }{%
-    \let\baaru:if_leipzig\@secondoftwo
-  }
-}{%
-  \let\baaru:if_leipzig\@secondoftwo
-}%
 \let\baaru:if_reset_for_chapters\baaru:if_has_chapters
 \let\baaru:if_use_chapter_labels\baaru:if_has_chapters
 \let\baaru:if_pars\@firstoftwo
@@ -355,62 +361,73 @@
   \csletcs{::baaru:sw::#1}{baaru#1}%
   \csletcs{::baaru:sw::no#1}{nobaaru#1}%
 }
-\def\baaru:hook_name::every#1{#1@\baaru:cur_style}
-\let\baaru:hook_test::every\@firstoftwo
-\def\baaru:hook_name::line#1{#1@\the\baaru:curY}
-\def\baaru:hook_test::line{\baaru:if_in_gloss}
-\let\baaru:hook_name::gloss\@firstofone
-\def\baaru:hook_test::gloss{\baaru:if_in_gloss}
 \def\newbaaruhook#1#2{%
-  \ifcsdef{baaru:hook_name::#2}{%
-    \csletcs{baaru:hook::#1@name}{baaru:hook_name::#2}%
-    \csletcs{baaru:hook::#1@if_settable}{baaru:hook_test::#2}%
-  }{%
-    \BaaruError{Unknown hook type `#2'}\@eha
-  }%
-}
-\newbaaruhook{everyexesi}{every}
-\newbaaruhook{everyfnexesi}{every}
-\newbaaruhook{everyexesii}{every}
-\newbaaruhook{everyexesiii}{every}
-\newbaaruhook{everyexesiv}{every}
-\newbaaruhook{everyex}{every}
-\newbaaruhook{everyscan}{every}
-\newbaaruhook{everybitsline}{every}
-\newbaaruhook{everygloss}{every}
-\newbaaruhook{glossloaded}{gloss}
-\newbaaruhook{glossoutput}{gloss}
-\newbaaruhook{lineoutput}{line}
-\def\baaru:with_hook#1#2{%
-  \expandafter\let\expandafter\:if_settable\csname baaru:hook::#1@if_settable\endcsname
-  \ifx\:if_settable\relax
-    \BaaruError{Unknown hook `#1'}\@eha
-    \def\:ifsettable##1##2{}%
-  \fi
-  \:if_settable{%
-    \edef\:hook{%
-      \expandafter\noexpand\csname baaru:hook::\csname baaru:hook::#1@name\endcsname{#1}\endcsname
-    }%
-    #2%
-  }{%
-    \BaaruError{The `#1' hook can't be set here}\@eha
-  }%
-}
-\def\addbaaruhook#1#2{%
-  \baaru:with_hook{#1}{%
-    \expandafter\ifx\:hook\relax
-      \expandafter\def\:hook{#2}%
-    \else
-      \expandafter\edef\:hook{%
-        \expandafter\expandonce\:hook
-        \unexpanded{#2}%
+  \ifblank{#2}{%
+    \csedef{baaru:add_hook::#1}##1{%
+      \noexpand\ifdef\expandafter\noexpand\csname baaru:hook::#1\endcsname{%
+        \noexpand\baaru:append\expandafter\noexpand\csname baaru:hook::#1\endcsname{##1}%
+      }{%
+        \def\expandafter\noexpand\csname baaru:hook::#1\endcsname{##1}%
       }%
-    \fi
+    }%
+    \csedef{baaru:use_hook::#1}{%
+      \noexpand\ifdef\expandafter\noexpand\csname baaru:hook::#1\endcsname{%
+        \expandafter\noexpand\csname baaru:hook::#1\endcsname
+      }{}%
+    }%
+    \csedef{baaru:remove_hook::#1}##1{%
+      \noexpand\ifdef\expandafter\noexpand\csname baaru:hook::#1\endcsname{%
+        \noexpand\baaru:remove_hook\expandafter\noexpand \csname baaru:hook::#1\endcsname{##1}%
+      }{%
+        \noexpand\BaaruError{The `#1' hook has not been set}\@eha
+      }%
+    }%
+    \csundef{baaru:hook::#1}%
+  }{%
+    \csdef{baaru:add_hook::#1}##1{%
+      \ifcsdef{baaru:hook::#1#2}{%
+        \baaru:csappend{baaru:hook::#1#2}{##1}%
+      }{%
+        \csdef{baaru:hook::#1#2}{##1}%
+      }%
+    }%
+    \csdef{baaru:use_hook::#1}{%
+      \ifcsdef{baaru:hook::#1#2}{%
+        \csname baaru:hook::#1#2\endcsname
+      }{}%
+    }%
+    \csdef{baaru:remove_hook::#1}##1{%
+      \ifcsdef{baaru:hook::#1#2}{%
+        \expandafter\baaru:remove_hook\csname baaru:hook::#1#2\endcsname{##1}%
+      }{%
+        \BaaruError{The `#1' hook has not been set}\@eha
+      }%
+    }%
+  }%
+}
+\newbaaruhook{everyexesi}{@\baaru:cur_style}
+\newbaaruhook{everyfnexesi}{@\baaru:cur_style}
+\newbaaruhook{everyexesii}{@\baaru:cur_style}
+\newbaaruhook{everyexesiii}{@\baaru:cur_style}
+\newbaaruhook{everyexesiv}{@\baaru:cur_style}
+\newbaaruhook{everyex}{@\baaru:cur_style}
+\newbaaruhook{everyscan}{@\baaru:cur_style}
+\newbaaruhook{everygloss}{@\baaru:cur_style}
+\newbaaruhook{glossloaded}{}
+\newbaaruhook{glossoutput}{}
+\newbaaruhook{lineoutput}{@\the\baaru:curY}
+\def\addbaaruhook#1#2{%
+  \ifcsdef{baaru:add_hook::#1}{%
+    \csname baaru:add_hook::#1\endcsname{#2}%
+  }{%
+    \BaaruError{Unknown hook `#1'}\@eha
   }%
 }
 \def\removebaaruhook#1#2{%
-  \baaru:with_hook{#1}{%
-    \expandafter\baaru:remove_hook\:hook#2%
+  \ifcsdef{baaru:remove_hook::#1}{%
+    \csname baaru:remove_hook::#1\endcsname{#2}%
+  }{%
+    \BaaruError{Unknown hook `#1'}\@eha
   }%
 }
 \def\baaru:remove_hook#1#2{%
@@ -422,8 +439,10 @@
   \expandafter\:kill#1\:delim#2\:delim\::delim
 }
 \def\usebaaruhook#1{%
-  \baaru:with_hook{#1}{%
-    \:hook
+  \ifcsdef{baaru:use_hook::#1}{%
+    \csname baaru:use_hook::#1\endcsname
+  }{%
+    \BaaruError{Unknown hook `#1'}\@eha
   }%
 }
 \def\::baaru:set::labelwidthexesi#1{\def\::baaru::labelwidthexesi{#1}\let\baaru:manual_labelwidthexesi\relax}
@@ -490,15 +509,25 @@
     }%
   }{%
     \let\baaru:if\@firstoftwo
-  }
+  }%
   \baaru:if{%
-    \baaru:set_max_label\global{exesi}{\baaru:if_ijal{88m$'$}{88$'$}}%
+    \baaru:init_labelwidth{88}%
   }{%
     \ifnum\c@exesi=99 % called before the counter gets incremented
-    \baaru:set_max_label\global{exesi}{\baaru:if_ijal{88m$'$}{888$'$}}%
+      \baaru:init_labelwidth{888}%
     \fi
   }%
 }%
+\def\baaru:init_labelwidth#1{%
+  \baaru:counta\c@exesi
+  \c@exesi#1\relax
+  \edef\@tempa{%
+    \theexesi
+    \baaru:if_ijal{m}{}%
+  }%
+  \c@exesi\baaru:counta
+  \baaru:set_max_label\global{exesi}{\@tempa$'$}%
+}
 \def\::baaru::judgmentpresep{0.3em}
 \def\::baaru::judgmentpostsep{0.08333em}
 \def\::baaru::labelsep{1em}
@@ -550,16 +579,15 @@
 \def\::baaru::labelexesii#1{#1.}
 \def\::baaru::labelexesiii#1{#1.}
 \def\::baaru::labelexesiv#1{#1.}
-\def\baaru:set_for_ijal#1{%
-  #1%
-  \xdef#1{%
-    \noexpand\partopsep\noexpand\z@
-    \noexpand\itemsep\the\itemsep\relax
-    \noexpand\topsep\noexpand\itemsep
-  }%
-}
 \def\baaruijal{%
   \baaru:if_ijal{}{%
+    \def\::baaru::partopsep{\z@ \@plus 0.1\::baaru::lineskip}%
+    \let\::baaru::topsepi\::baaru::itemsepi
+    \let\::baaru::topsepii\::baaru::itemsepii
+    \ifnum\baaru:exdepth=\z@\else
+      \partopsep\::baaru::partopsep
+      \topsep\itemsep
+    \fi
     \def\::baaru::labelexesii##1{%
       \::baaru::labelexesi{\p@exesii##1}%
     }%
@@ -575,13 +603,6 @@
       \advance\@tempdima\wd\z@
       \edef\::baaru::labelwidthexesi{\the\@tempdima}%
     }{}%
-    \begingroup
-    \baaru:set_for_ijal\baarulistii
-    \baaru:set_for_ijal\baarulistiii
-    \baaru:set_for_ijal\baarulistiv
-    \baaru:set_for_ijal\baarulistv
-    \baaru:set_for_ijal\baarulistvi
-    \endgroup
     \let\baaru:if_ijal\@firstoftwo
   }%
 }%
@@ -593,38 +614,14 @@
 \def\::baaru:set::rightmargin#1{\rightmargin#1\relax}
 \def\::baaru:set::listparindent#1{\listparindent#1\relax}
 \def\::baaru:set::itemindent#1{\itemindent#1\relax}
-\def\baaru:init_list_params#1#2{%
-  \ifdef#1{%
-    #1%
-  }{%
-    #2%
-    \xdef#1{%
-      \noexpand\topsep\the\topsep\relax
-      \noexpand\partopsep\the\partopsep\relax
-      \noexpand\parsep\the\parsep\relax
-      \noexpand\itemsep\the\itemsep\relax
-    }%
-  }%
-}
-\begingroup
-  \baaru:init_list_params\baarulisti@normal\@listi
-  \baaru:init_list_params\baarulistii\@listii
-  \baaru:init_list_params\baarulistiii\@listiii
-  \baaru:init_list_params\baarulistiv\@listiv
-  \baaru:init_list_params\baarulistv\@listv
-  \baaru:init_list_params\baarulistvi\@listvi
-  \small
-  \baaru:init_list_params\baarulisti@small\@listi
-  \footnotesize
-  \baaru:init_list_params\baarulisti@footnote\@listi
-\endgroup
-\appto\normalsize{\baarusetsize{normal}}
-\appto\small{\baarusetsize{small}}
-\appto\footnoteize{\baarusetsize{footnote}}
-\protected\def\baarusetsize#1{%
-  \letcs\baarulisti{baarulisti@#1}%
-}
-\AtBeginDocument{\let\baarulisti\baarulisti@normal}%
+\def\::baaru::lineskip{\baselineskip}
+\def\::baaru::partopsep{0.2\::baaru::lineskip \@plus 0.1\::baaru::lineskip \@minus 0.1\::baaru::lineskip}%
+\def\::baaru::topsepi{0.6667\::baaru::lineskip \@plus 0.3333\::baaru::lineskip \@minus 0.2\::baaru::lineskip}%
+\def\::baaru::parsepi{0.3333\::baaru::lineskip \@plus 0.1667\::baaru::lineskip \@minus 0.1\::baaru::lineskip}%
+\let\::baaru::itemsepi\::baaru::parsepi
+\let\::baaru::topsepii\::baaru::parsepi
+\let\::baaru::parsepii\::baaru::parsepi
+\let\::baaru::itemsepii\::baaru::parsepii
 \let\::baaru::optarg\baarucolon@c
 \let\baaru:optarg\baarucolon@m
 
@@ -784,9 +781,26 @@
 \def\theexesiv{\Alph{exesiv}}
 \def\p@exesiv{\thetopexes\theexesii.\theexesiii.}
 \@addtoreset{exesiv}{exesiii}
-\def\baaruexno#1{%
+\def\baaruexno{%
+  \@ifstar\baaru:exno@star\baaru:exno
+}
+\def\baaru:exno#1{%
   \refstepcounter{#1}%
   \csname ::baaru::label#1\endcsname{\csname the#1\endcsname}%
+}
+\def\baaru:exno@star#1{%
+  \baaru:if_in_footnote{%
+    \baaru:maybe_init_labelwidth
+  }{}%
+  \refstepcounter{#1}%
+  \@tempdima\csname ::baaru::labelwidth#1\endcsname
+  \advance\@tempdima\::baaru::labelsep\relax
+  \hbox to\@tempdima{%
+    \::baaru::makelabel{%
+      \csname ::baaru::label#1\endcsname{\csname the#1\endcsname}%
+    }%
+    \hskip\::baaru::labelsep
+  }%
 }
 \newenvironment{examples}[1][]{%
   \baaru:if_in_ex{%
@@ -808,6 +822,7 @@
     \else
       \advance\baaru:exdepth\@ne
       \ifnum\baaru:exdepth=\@ne
+        \par
         \baaru:if_in_footnote{%
           \def\baaru:excounter{fnexesi}%
           \let\thetopexes\thefnexesi
@@ -817,8 +832,17 @@
           \baaru:maybe_init_labelwidth
         }%
         \labelsep\::baaru::labelsep\relax
+        \partopsep\::baaru::partopsep\relax
+        \topsep\::baaru::topsepi\relax
+        \itemsep\::baaru::itemsepi\relax
+        \parsep\::baaru::parsepi\relax
       \else
         \edef\baaru:excounter{exes\romannumeral\baaru:exdepth}%
+        \ifnum\baaru:exdepth=\tw@
+          \topsep\::baaru::topsepii\relax
+          \itemsep\::baaru::itemsepii\relax
+          \parsep\::baaru::parsepii\relax
+        \fi
       \fi
       \baaru:ncols\@ne
       \interlinepenalty=10000\relax
@@ -828,7 +852,6 @@
       \rightmargin\z@
       \listparindent\z@
       \itemindent\z@
-      \csname baarulist\romannumeral\the\@listdepth\endcsname
       \usebaaruhook{every\baaru:excounter}%
       \ifblank{#1}{}{%
         \baaruset{#1}%
@@ -869,6 +892,7 @@
   }{}%
   \allowbreak
 }
+\let\baaru:endexample\relax
 \newenvironment{example}[1][]{%
   \ifnum\baaru:exdepth=\z@
     \let\baaru:endexample\endexamples
@@ -883,6 +907,7 @@
 }{%
   \baaru:endexample
 }
+\let\baaru:endsubexamples\relax
 \newenvironment{subexamples}[1][]{%
   \ifnum\baaru:exdepth=\z@
     \let\baaru:endsubexamples\endexamples
@@ -1478,7 +1503,7 @@
   }{%
     \baaru:new_simple_line_type{#1}{#2}{#3}%
   }%
-  \newbaaruhook{every#2line}{every}%
+  \newbaaruhook{every#2line}{@\baaru:cur_style}%
   \listcsadd{baaru:lines@\baaru:cur_style}{#2}%
   \cslet{baaru:activate::line@#2@\baaru:cur_style}\@empty
   \cslet{baaru:deactivate::line@#2@\baaru:cur_style}\@empty
@@ -1508,7 +1533,8 @@
     \baaru:init_markup{\@tempa}{##1}%
     \cslet{baaru:activate::line@\@tempa @\baaru:cur_style}\@empty
     \cslet{baaru:deactivate::line@\@tempa @\baaru:cur_style}\@empty
-    \newbaaruhook{every\@tempa line}{every}%
+    \edef\@tempa{every\@tempa line}%
+    \expandafter\newbaaruhook\expandafter{\@tempa}{@\baaru:cur_style}%
     \advance\baaru:counta\@ne
   }%
   \baaru:foreach\do{#2}%
@@ -2343,7 +2369,16 @@
 \def\baaru:move_down_for_nlevel{%
   \csname baaru:deactivate::line@\baaru:cur_line @\baaru:cur_style\endcsname
   \baaru:if_skip_to_next_col{%
-    \baaru:curNlevelY\baaru:lastNlevelY
+    \ifnum\baaru:curX=\z@
+      \advance\baaru:curNlevelY\@ne
+      \loop\ifnum\baaru:curNlevelY<\baaru:lastNlevelY
+        \advance\baaru:curY\@ne
+        \usebaaruhook{every\baaru:cur_nlevel\baalph\baaru:curNlevelY line}
+        \advance\baaru:curNlevelY\@ne
+      \repeat
+    \else
+      \baaru:curNlevelY\baaru:lastNlevelY
+    \fi
     \let\baaru:if_skip_to_next_col\@secondoftwo
   }{%
     \advance\baaru:curY\@ne
@@ -2440,9 +2475,11 @@
   \fi
   \csundef{baaru:coldata::id@\the\baaru:curX}%
   \baaru:init_coldata_id
-  \baaru:counta\baaru:curX
-  \advance\baaru:counta\@ne
-  \edef\@tempa{\csname baaru:coldata::id@\the\baaru:counta\endcsname}%
+  \advance\baaru:curX\@ne
+  \baaru:init_coldata_id
+  \edef\@tempa{\baaru:cur_coldata_id}%
+  \advance\baaru:curX\m@ne
+  \baaru:init_coldata_id@nocheck
   \csname baaru:coldata::if_wrap@\@tempa\endcsname{%
     \cslet{baaru:coldata::if_wrap@\baaru:cur_coldata_id}\@firstoftwo
     \cslet{baaru:coldata::if_wrap@\@tempa}\@secondoftwo
@@ -3007,7 +3044,16 @@
 \def\baarusetupcol#1{%
   \baaru:if_in_cells{%
     \baaru:if_in_nlevel{%
-      \baaruendcol
+      \::baaru::if_explicitcells{%
+        \baaru:next_cell{\baaru:scan_state::empty}%
+      }{%
+        \baaru:if_buffer_empty{}{%
+          \baaru:next_cell{\baaru:scan_state::empty}%
+        }%
+      }%
+      \ifnum\baaru:curNlevelY=\z@\else
+        \BaaruError{Stranded nlevel cells (\the\baaru:curY\space extra)}\@ehc
+      \fi
     }{%
       \::baaru::if_explicitcells{%
         \baaru:next_cell{\baaru:scan_state::empty}%
@@ -3792,13 +3838,13 @@
   \let\protect\:protect
 }
 \def\baaru:parse_abbrevs@#1{%
-  \expandafter\baaru:parse_abbrevs@@#1\:delim#1%
+  \expandafter\baaru:parse_abbrevs@@#1\baaruendscan\:delim#1%
 }
 \def\baaru:parse_abbrevs@@#1\:delim#2{%
   \baaru:buffer={}%
   \baaru:abbr:scan_init
   \baaru:init_abbrev_seps
-  \expandafter\baaru:abbr:scan\scantokens{#1\baaruendscan}%
+  \expandafter\baaru:abbr:scan\scantokens{#1}%
   \baaru:reset_abbrev_seps
   \edef#2{%
     \the\baaru:buffer
@@ -4119,7 +4165,7 @@
     \ifx\baaru:cur_style\:cached_style
       #3%
     \else
-      \let\baaru:cur_style\baaru:cached_style
+      \let\baaru:cur_style\:cached_style
     \fi
   }{%
     \BaaruError{There is no style tagged `#1'}\@eha

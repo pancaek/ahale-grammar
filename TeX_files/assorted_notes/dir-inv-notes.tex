@@ -1,0 +1,133 @@
+\section{Direct-Inverse Marking}
+Aside from TAM, verbs are inflected as either direct or inverse. This serves in disambiguating syntactic roles of verbal constituents, particularly when they have been partially or completely omitted.
+
+The proper form is selected based off of a person hierarchy. If the agent of a verb is ranked higher on this hierarchy than the patient, the direct form will be used. In the opposite situation, the inverse form is required.
+
+Because of the morphological ergative marking, it is usually straightforward to determine the roles of the constituents, and as a result of this redundancy, many pronouns can be simply dropped and conveyed by this hierarchy.
+
+Generally, the hierarchy is as follows:
+
+{\large 2\textsuperscript{nd} person > 1\textsuperscript{st} person > 3\textsuperscript{rd} person}
+
+ In discourse however, sometimes a first person will be implied where one might otherwise expect second person implication. This does not affect the animacy hierarchy itself, so inversion still works as expected.
+
+In these initial examples, as well as any others which display unexpected behavior based under the general hierarchy, annotations describing agency will be provided and subsequently explained.
+
+%TODO: I haven't decided how I want to typeset those indicators, do that.
+\begin{example}
+  \preamble meme awale hawi
+  \gloss
+  me\allo me & ERG\allo1SG \\
+  awale & touch \\
+  hawi & rabbit \\
+  \tr I touch the rabbit.
+\end{example}
+
+\begin{example}
+  \preamble hahawi awalesi me
+  \gloss
+  ha\allo hawi & ERG\allo rabbit \\
+  awale & touch \\
+    -si & INV \\
+    me & 1SG \\
+    \tr The rabbit touches me.
+  \end{example}
+
+  When compound verbs are inflected in the inverse form, the inverse marking is required for each component:
+
+  \begin{example}
+    \preamble hahawi awalesi awalesi me
+    \gloss
+    ha\allo hawi & ERG\allo rabbit \\
+    awale & touch \\
+    -si & INV \\
+    awale & touch \\
+    -si & INV \\
+    me & 1SG \\
+    \tr The rabbit nuzzles me.
+\end{example}
+
+Intransitive verbs do not receive the inverse marking; there is no way to compare animacy between things without a pair. Because of this, transitive verbs without an overt 1/2 subject are common, as the subject can be elided and instead conveyed by the verbal marking, with no confusion for an intransitive counterpart.
+
+A similar phonomenon can be found in direct verbs, however different strategies are taken to avoid confusion with ambitransitive verbs.
+
+\begin{example}
+  \preamble me kula pa ilau
+  \gloss
+  me & 1SG \\
+  kula & hurt \\
+  pa & now \\
+  i- & NPST.IPFV \\
+  lau & irritate \\
+  \tr I got hurt and it's getting worse. %* Remind me to show you meanings of lau cause this is a shit translation atm
+  \alt You hurt \underline{me} and it's getting worse.
+\end{example}
+
+This example could be interpreted two ways. The intended reading uses \nativetext{ikula} intransitively. However, based on the rules for pronoun elision outlined earlier, the verb could also be interpreted as having an elided second person agent. The position of the object pronoun \nativetext{me} is useful in disambiguating these readings, as typically, (2)>1 forms of \nativetext{kula} would yield \nativetext{kula me}.
+
+If \nativetext{me} is intended as a focused patient, with the elided agent interpreted as such, we would expect the following, with \nativetext{me} explicitly marked as the patient:
+
+\begin{example}
+  \preamble lu me kula pa ilau
+  \gloss
+    lu & OBV \\
+    me & 1SG \\
+    kula & hurt \\
+    pa & now \\
+    i- & NPST.IPFV \\
+    lau & irritate \\
+  \tr You hurt \underline{me} and it's getting worse. %* Remind me to show you meanings of lau cause this is a shit translation atm
+\end{example}
+
+\subsection{Irregular Inference}
+One place where first person is inferred over second, is when concerning emotions:
+
+\aside{Note that the latter is strange in isolation, it doesn't make sense to declare the emotions of others.}
+\begin{examples}
+  \baarucols{2}
+  \ex
+  \preamble nale
+  \gloss
+  nale & be\_sad \\
+  \tr I am sad.
+  \ex
+  \preamble tu nale
+  \gloss
+  tu & 2SG \\
+  nale & be\_sad \\
+  \tr You are sad.
+\end{examples}
+
+Or, in expressing wishes, wants and desires:
+
+\begin{example}\label{ex:want-cat}
+  \preamble lisu malaku
+  \gloss
+  lisu & want \\
+  malaku & cat \\
+  \tr I want a cat.
+\end{example}
+
+\aside{\fleuron\ An intransitive reading of \nativetext{lisu} is ungrammatical, so this doesn't introduce any sort of ambiguity in that regard.}
+\aside{\fleuron\ Because no subject is overtly present, the indicative assumes the V-inital form usually indicating interrogative mood. These are disambiguated through prosodic changes.}
+
+Alternatively, the object can be fronted and explicitly marked as the patient. This construction restores the visible difference in the interrogative.
+
+\begin{examples}
+  \baarucols{2}
+  \ex
+    \preamble lu malaku lisu
+    \gloss
+      lu & OBV \\
+      malaku & cat \\
+      lisu & want \\
+    \tr I want a cat.
+  \ex
+    \preamble lisu malaku
+    \gloss
+      lisu & want \\
+      malaku & cat \\
+    \tr Do you want a cat?
+\end{examples}
+
+However, in these cases, the interrogative form behaves differently than the indicative reading. Revisiting \baaruref{ex:want-cat}, notice how the indicative form given assumes 1>3 agency, while the interrogative assumes 2>3.

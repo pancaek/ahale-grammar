@@ -16,6 +16,10 @@
 \newcommand{\baaruref}[1]{\hyperref[#1]{(\ref*{#1})}}
 
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}\footnotesize}
+
+\newbaarulinetype{insert}{tikz}{\tikz[baaru]}
+\tikzset{baaru/.style={baseline=0.3ex}}
+
 \setbaaruabbrevseps{.:-()<>[]}
 \baabbrev{aff}{affirmative}
 \baabbrev{neg}{negative}

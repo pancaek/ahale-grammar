@@ -37,6 +37,7 @@ jobs:
           latexmk_use_xelatex: true
 
       - name: Commit files
+<<<<<<< HEAD
         run: |
           git config --global user.name 'Pancaek'
           git config --global user.email 'Pancaek@users.noreply.github.com'
@@ -52,3 +53,9 @@ jobs:
           
           
 >>>>>>> 85c440c (Update main.yml)
+=======
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: 'ahale.pdf'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+>>>>>>> f7c61bb (Add pdf to release instead of branch)

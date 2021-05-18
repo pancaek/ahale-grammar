@@ -36,26 +36,8 @@ jobs:
           root_file: ahale.tex
           latexmk_use_xelatex: true
 
-      - name: Commit files
-<<<<<<< HEAD
-        run: |
-          git config --global user.name 'Pancaek'
-          git config --global user.email 'Pancaek@users.noreply.github.com'
-          git add -f ahale.pdf
-          git checkout -b gh-pages
-          git commit -m "Update PDF"
-<<<<<<< HEAD
-          git push -f origin gh-pages
-          git rm --cached ahale.pdf
-=======
-          git push --set-upstream origin gh-pages
-          git rm --cached ahale.pdf
-          
-          
->>>>>>> 85c440c (Update main.yml)
-=======
+      - name: Upload PDF
         uses: AButler/upload-release-assets@v2.0
         with:
           files: 'ahale.pdf'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
->>>>>>> f7c61bb (Add pdf to release instead of branch)

@@ -2,7 +2,7 @@
 
 name: Push PDF on release
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on release
   release:
@@ -28,7 +28,7 @@ jobs:
           sudo mkdir -p ~/.local/share/fonts/
           wget -c https://github.com/alerque/libertinus/releases/download/v7.040/Libertinus-7.040.tar.xz -O - | sudo tar -xJ -C ~/.local/share/fonts/
           fc-cache -rv
-          
+
       # Compile with latexmk and xelatex
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v2
@@ -36,9 +36,19 @@ jobs:
           root_file: ahale.tex
           latexmk_use_xelatex: true
 
-      - name: Commit changes
+      - name: Commit files
         run: |
+          git config --global user.name 'Pancaek'
+          git config --global user.email 'Pancaek@users.noreply.github.com'
+          git add -f ahale.pdf
           git checkout -b gh-pages
-          git add ahale.pdf
-          git commit -m "Update pdf"
-          git push
+          git commit -m "Update PDF"
+<<<<<<< HEAD
+          git push -f origin gh-pages
+          git rm --cached ahale.pdf
+=======
+          git push --set-upstream origin gh-pages
+          git rm --cached ahale.pdf
+          
+          
+>>>>>>> 85c440c (Update main.yml)

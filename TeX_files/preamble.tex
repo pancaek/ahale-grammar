@@ -6,6 +6,8 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 
+\usepackage{multicol}
+
 %? Ling stuff
 \usepackage[nostandards]{baabbrevs}
 \usepackage[2level]{baarux}
@@ -73,12 +75,12 @@
 \nonzeroparskip
 
 %* Font
-
 \setmainfont{LibertinusSerif}[
 Extension = .otf ,
 UprightFont = *-Regular ,
 BoldFont = *-Bold ,
 ItalicFont = *-Italic ,
+BoldItalicFont = *-BoldItalic ,
 ]
 
 \urlstyle{same}
@@ -110,3 +112,5 @@ ItalicFont = *-Italic ,
 \newcommand{\aside}[1]{\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \footnotesize #1}}
 \newcommand{\fleuron}{❧}
 \newcommand{\allo}{\textasciitilde}
+
+\definecolor{groupcolor}{HTML}{D6CB9A}

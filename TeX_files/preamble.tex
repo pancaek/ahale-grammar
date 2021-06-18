@@ -6,62 +6,30 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 
-\usepackage{multicol}
-
 %? Ling stuff
 \usepackage[nostandards]{baabbrevs}
 \usepackage[2level]{baarux}
 \usepackage{tikzvowel, phonrule}
-\baaruset{tr.markup=\transtext, preamble.markup=\bfseries}
-\newbaarulinetype{preamble}{pronunciation}{\phontext}
-\newbaarulinetype{tr}{lit}{\textit{Lit: }}
-\newcommand{\baaruref}[1]{\hyperref[#1]{(\ref*{#1})}}
+% \baaruset{tr.markup=\transtext, preamble.markup=\bfseries}
+% \newbaarulinetype{preamble}{pronunciation}{\phontext}
+% \newbaarulinetype{tr}{lit}{\textit{Lit: }}
+% \newcommand{\baaruref}[1]{\hyperref[#1]{(\ref*{#1})}}
 
-\addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}\footnotesize}
+% \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}\footnotesize}
 
-\newbaarulinetype{insert}{tikz}{\tikz[baaru]}
-\tikzset{baaru/.style={baseline=0.3ex}}
-
-\setbaaruabbrevseps{.:-()<>[]}
-\baabbrev{aff}{affirmative}
-\baabbrev{neg}{negative}
-\baabbrev{rel}{relative}
-\baabbrev{poss}{possessive}
-\baabbrev{cert}{certainty particle}
-\baabbrev{abs}{absolutive case}
-\baabbrev{erg}{ergative case}
-\baabbrev{dir}{direct}
-\baabbrev{inv}{inverse}
-\baabbrev{prox}{proximate}
-\baabbrev{obv}{obviative}
-\baabbrev{sg}{singular}
-\baabbrev{pl}{plural}
-
-\baabbrev{name}{name}
-
-\baabbrev{adjz}{adjectivizer}
-\baabbrev{vbz}{verbalizer}
-\baabbrev{assoc}{associative}
-
-\baabbrev[\FIRST]{1}{first person}
-\baabbrev[\SECOND]{2}{second person}
-
-\baabbrev{pst}{past}
-\baabbrev{npst}{nonpast}
-\baabbrev{pfv}{perfective}
-\baabbrev{ipfv}{imperfective}
+% \newbaarulinetype{insert}{tikz}{\tikz[baaru]}
+% \tikzset{baaru/.style={baseline=0.3ex}}
 
 %? Date handling
 \DTMsavedate{startdate}{2020-03-15}
 
 %? Layout
-\setcounter{chapter}{-1}
 
 %* Phonetic rules spacing
-\let\origphonc\phonc
-\def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}
-\let\origphon\phon
-\def\phon{\setlength{\tabcolsep}{3pt}\origphon}
+% \let\origphonc\phonc
+% \def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}
+% \let\origphon\phon
+% \def\phon{\setlength{\tabcolsep}{3pt}\origphon}
 
 %* Page numbering
 \pagestyle{ruled}
@@ -83,8 +51,6 @@ ItalicFont = *-Italic ,
 BoldItalicFont = *-BoldItalic ,
 ]
 
-\urlstyle{same}
-
 %* ToC styling
 \renewcommand\cftdotsep{2.5}
 
@@ -100,17 +66,13 @@ BoldItalicFont = *-BoldItalic ,
 \setlist[itemize]{label=---}
 
 %? Shortcuts
+
+%* Ling notation
 \newcommand{\langname}{Ahale}
 \newcommand{\phontext}[1]{[#1]}
 \newcommand{\phomtext}[1]{/#1/}
 \newcommand{\morphtext}[1]{|#1|}
 \newcommand{\orthotext}[1]{\textlangle #1\textrangle}
-\newcommand{\nativetext}[1]{\textit{#1}}
-\newcommand{\transtext}[1]{`#1'}
-\newcommand{\notabletext}[1]{\textbf{#1}}
 
 \newcommand{\aside}[1]{\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \footnotesize #1}}
-\newcommand{\fleuron}{❧}
 \newcommand{\allo}{\textasciitilde}
-
-\definecolor{groupcolor}{HTML}{D6CB9A}

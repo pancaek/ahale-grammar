@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{memoir}
+\documentclass[12pt, a4paper]{book}
 \input{TeX_files/preamble.tex}
 
 \begin{document}
@@ -6,15 +6,14 @@
 \author{Pancake}
 \date{\DTMusedate{startdate} -- \DTMtoday}
 \frontmatter
-\begin{titlingpage}
-  \maketitle
-\end{titlingpage}
 
-\begin{KeepFromToc}
-  \tableofcontents
-\end{KeepFromToc}
+\maketitle
+\thispagestyle{empty}
+\tableofcontents
+\clearpage
+\thispagestyle{empty}
+
 \mainmatter
-
 
 
 \backmatter

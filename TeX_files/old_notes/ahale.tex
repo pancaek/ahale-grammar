@@ -1,0 +1,530 @@
+\documentclass[12pt, a4paper, openright, draft]{memoir}
+\input{TeX_files/preamble.tex}
+
+\begin{document}
+\title{\langname : A Complete Reference}
+\author{Pancake}
+\date{\DTMusedate{startdate} -- \DTMtoday}
+\frontmatter
+\begin{titlingpage}
+  \maketitle
+\end{titlingpage}
+
+\begin{KeepFromToc}
+  \tableofcontents
+\end{KeepFromToc}
+\mainmatter
+
+\include{TeX_files/intro}
+\include{TeX_files/phonology}
+\include{TeX_files/morphology/morphology}
+
+% bibliography, glossary and index would go here.
+% \chapter{Passages}
+\begin{comment}
+
+  \begin{verbatim}
+    heya <<vendor>>
+    <vendor> siʔe
+    Bright <vendor>. (This is a bit formal but not much since <vendor> is working)
+
+  oi Teɸinu, how's it going?
+  mili hasi <customer>?
+  "You are as you should? (certain; in interrogatives this primes expectations but anything less than mili is
+  rude unless already engaged in convo)"
+
+  well, I heard there's about to be a storm
+  wa me kana, pa suaki ɸai hipese
+  AFF I heard this, then [strong wind won't be contained] (anymore) // ɸai is being used as a subordinating
+  conjunction here
+
+  yeah, seems like one of the big ones -- you looking for something?
+  wa suaki, taʔe ki -- kisuɸi auku?
+  [ AFF wind_blow ] prox-assoc (resumptive ta because verbs cannot be the head of a typical relative clause)
+  big -- WONDERING look(2sg)
+
+  ye nah I was thinking <<bad idea>> but I'm not sure now—
+  <<papaya>>?
+  meme imipi iniha ta <<paʔawa>> lu, kini ʔike ɸai meme
+  1sg.erg think-pst.ipfv give-pst.ipfv prox papaya obv, know neg 1sg.erg
+
+  how bout some yams instead, eh?
+  Meme leha upe...
+  erg-1sg have.npst.ipfv yam
+
+  yams?
+  lelewine?
+  uncert
+
+  yeah, good stuff
+  wa, luʔe kate
+  AFF OBV-ASSOC good
+
+  that's... alright, yams, how many dyou have?
+  kiniʔe kate... atai leha tutu upe?
+  this-ASSOC good | number have 2sg yam
+
+  lemmesee... <<counts>> I've got <<number>>, how's four? couple extra in case it gets
+  wild
+  me auku --- ai, ni, ku,... niheu upe, ha kiniʔe kate pa ilaʔe xaku
+  1sg see --- one two three ... twenty yam | four this good now gift [from] pain
+
+  mhm, sounds alright - that's <<sum>>, yeah?
+  wa, kiniʔe kate - nataʔe kisuɸi ki
+  aye, this is nice - that's a lot (kinda certain)
+
+  ye, nah, since there's a storm I'll let you have them for <<smaller sum>>
+  wa. suaki ɸai hipese pa upeʔe tele
+
+  if you insist, I spose I can always—
+  lelewine paki, mai mapi
+
+  I'm gonna pack away soon, so just-
+  pa lau---
+
+  yeah ok-
+  wa-
+
+  -just, just take them
+  tutu niha ta
+
+  -free?
+  mapiʔe ila?
+  whole-assoc gift
+
+  you'll pay me later, go, take ca-
+  nihasi ila lu me, Tu(ʔe si).
+
+  -ah thanks-
+  ɸawa
+
+  -care-
+  (ʔe si)
+
+  ye alright, see you
+  taʔe kate, iaukusi alete aukusi
+
+  bye!
+  meme hasi ta
+  I am as I should
+
+  mumbling yams, yams... shit, how many do I have left now
+  Pa upe upe, atai leha meme upe?
+  \end{verbatim}
+
+
+  \ex
+  \begin{tikzpicture}
+    \contour[contour raise=0.5cm]
+    {|[2]Nalexu|[2] siʔe|[6]}
+  \end{tikzpicture}
+
+  \begingl
+  Nalexu[\textsc{name}]
+  si-ʔe[brightness\textsc{-assoc}]
+  \glft \transtext{Hey Nalexu!} \\ \hspace*{1em}\textsc{lit.} \transtext{Bright Nalexu!}
+  \endgl
+  \xe
+  {
+    \color{red}
+    \ex
+
+    \begin{tikzpicture}
+      \contour[contour raise=0.5cm]
+      {|[3]Mili |[4]ha|[2]si |[1]Teɸi|[2]nu?}
+    \end{tikzpicture}
+
+    \begingl
+    mili[\textsc{certain}]
+    hasi[continue\textsc{[q]}]
+    Teɸinu[\textsc{name}]
+    \glft \transtext{How are you doing, Teɸinu?} \\ \hspace*{1em}\textsc{lit.} \transtext{You are as you should be, Teɸinu?}
+    \endgl
+    \xe
+    }
+
+    In interrogatives, certainty particles used this way prime expectations of the answer, but anything less than \nativetext{mili} is rude unless already engaged in conversation where \nativetext{mili} is deemed unfit.
+
+    \ex
+
+    \begin{tikzpicture}
+      \contour[contour raise=0.5cm]
+      {|[2]Wa me |[6]kana|[2] pa|[5] |[2]suaki ɸai|[1] hipese|[2]}
+    \end{tikzpicture}
+
+    \begingl
+    wa[\textsc{aff}]
+    me[\textsc{1sg}]
+    kana[hear]
+    pa[now]
+    suaki[wind\_blow]
+    ɸai[\textsc{conj}]
+    hipese[contain]
+    \glft \transtext{`I heard there's about to be a storm?} \\ \hspace*{1em}\textsc{lit.} \transtext{Well, I heard soon that the wind won't be contained.}
+    \endgl
+    \xe
+
+    \nativetext{ɸai} is being used as a negative subordinating conjunction here.
+
+    \ex
+    {
+      \color{red}
+      \begin{tikzpicture}
+        \contour[contour raise=0.5cm]
+        {  |[2]wa |[6]suaki, |[3]taʔe ki|[2] -- |[4]kisuɸi |[2]auku?|[3]}
+      \end{tikzpicture}
+
+      \begingl
+      wa[\textsc{aff}]
+      suaki[wind\_blow]
+      taʔe[\textsc{prox-assoc}]
+      ki[big]
+      kisuɸi[\textsc{wonder}]
+      auku[see]
+      \glft \transtext{Yeah, seems like one of the big ones -- you looking for something?}
+      \endgl
+      \xe}
+
+      \ex
+
+
+      \begin{tikzpicture}
+        \contour[contour raise=0.5cm]
+        {|[2]meme |[6]imipi|[3] iniha ta|[6] paʔawa lu, |[4]kini |[2]ʔike ɸai meme|[1]}
+      \end{tikzpicture}
+
+      \begingl
+      me\textasciitilde me[\textsc{erg\textasciitilde 1sg}]
+      i-mipi[\textsc{pst.ipfv-}think]
+      i-niha[\textsc{pst.ipfv-}give]
+      ta[\textsc{prox}]
+      paʔawa[papaya]
+      lu[\textsc{obv}]
+      kini[\textsc{dem\_prox}]
+      ʔike[know]
+      ɸai[\textsc{neg}]
+      me\textasciitilde me[\textsc{erg\textasciitilde 1sg}]
+      \glft \transtext{Yeah, I was thinking papaya but I'm not sure now---}
+      \endgl
+      \xe
+      {
+        \color{red}
+        \ex
+
+        \begin{tikzpicture}
+          \contour[contour raise=0.5cm]
+          {|[6]meme |[2]leha upe|[2]}
+        \end{tikzpicture}
+
+        \begingl
+        me\textasciitilde me[\textsc{erg\textasciitilde 1sg}]
+        leha[have]
+        upe[yam]
+        \glft \transtext{Have some yams instead, eh?}
+        \endgl
+        \xe
+        }
+        \ex
+
+        \begin{tikzpicture}
+    \contour[contour raise=0.5cm]
+    {|[2]lelewine|[2]}
+  \end{tikzpicture}
+
+  \begingl
+  lelewine\textasciitilde\textasciitilde[\textsc{uncert}]
+  \glft \transtext{Yams?}
+  \endgl
+  \xe
+  \pagebreak
+  {
+    \color{red}
+    \ex
+
+    \begin{tikzpicture}
+      \contour[contour raise=0.5cm]
+      {|[2]wa |[5]luʔe |[3]kate|[2]}
+    \end{tikzpicture}
+
+    \begingl
+    wa[\textsc{aff}]
+    lu-ʔe[\textsc{obv-assoc}]
+    kate[goodness]
+    \glft \transtext{Yeah, good stuff.}
+    \endgl
+    \xe
+    }
+    \ex
+
+    \begin{tikzpicture}
+      \contour[contour raise=0.5cm]
+      {|[4]luʔe kate\textasciitilde\textasciitilde|[2] |[7]atai leha tutu |[2]upe|[4]}
+    \end{tikzpicture}
+
+    \begingl
+    kini-ʔe[\textsc{dem\_prox-assoc}]
+    kate[goodness]
+    atai[number\textsc{[q]}]
+    leha[have]
+    tu\textasciitilde tu[\textsc{erg\textasciitilde 2sg}]
+    upe[yam]
+    \glft \transtext{That's... alright. Yams--- how many do you have?}
+    \endgl
+    \xe
+    {
+      \color{red}
+      \ex
+
+      \begin{tikzpicture}
+        \contour[contour raise=0.5cm]
+        {|[2]me au|[4]ku\textasciitilde\textasciitilde|[2] |[2]ai|[4], |[2]ni|[4], |[2]ku,... |[6]niheu |[2]upe,|[1] |[4]ha kiniʔe|[2] |[5]kate|[2] |[5]pa ilaʔe |[4]xaku|[2]}
+      \end{tikzpicture}
+
+      \begingl
+      me[\textsc{1sg}]
+      auku[see]
+      ai[one]
+      ni[two]
+      ku[three]
+      niheu[ten]
+      upe[yam]
+      ha[four]
+      kini-ʔe[\textsc{dem\_prox-assoc}]
+      kate[goodness]
+      pa[now]
+      ilaʔe[gift\textsc{-assoc}]
+      xaku[pain]
+      \glft \transtext{I'll check... 1, 2, 3--- I’ve got ten, how’s four? A bit extra if it gets wild.}
+      \endgl
+      \xe}
+      % With \nativetext{pa} rather than a more uncertain construction, the implication is that the happening is inevitable.
+
+      \ex
+      \begin{tikzpicture}
+        \contour[contour raise=0.5cm]
+        {|[2]wa|[2], |[4]kiniʔe kate|[2] - |[5]nataʔe kisuɸi|[3] ki|[1]}
+
+      \end{tikzpicture}
+
+
+
+      \begingl
+      wa[\textsc{aff}]
+      kini-ʔe[\textsc{dem\_prox-assoc}]
+      kate[goodness]
+      nata-ʔe[\textsc{dem\_med-assoc}]
+      kisuɸi[\textsc{cert}]
+      ki[big]
+      \glft \transtext{Aye, this is nice -- that's a lot.}
+      \endgl
+      \xe
+
+      {
+        \color{red}
+        \ex
+
+        \begin{tikzpicture}
+          \contour[contour raise=0.5cm]
+          {|[2]wa suaki|[3] ɸai|[1] hipese|[3] pa upeʔe te|[1]le|[3]}
+
+        \end{tikzpicture}
+
+
+        \begingl
+        wa[aff]
+        suaki[wind\_blow]
+        ɸai[\textsc{conj}]
+        hipese[contain]
+        pa[now]
+        upe-ʔe[yam\textsc{-assoc}]
+        tele[part]
+        \glft \transtext{Hmm, since there’s a storm I’ll let you have them for less.}
+        \endgl
+        \xe
+        }
+        \ex
+
+        \begin{tikzpicture}
+          \contour[contour raise=0.5cm]
+          {|[2]lelewine|[2] |[5]paki|[1]  mai |[6]mapi|[3]}
+        \end{tikzpicture}
+
+        \begingl
+        lelewine[\textsc{uncert}]
+        paki[tell\_truth]
+        mai[time]
+        mapi[whole]
+        \glft \transtext{If you insist, I'll always---}
+        \endgl
+        \xe
+
+        {
+          \color{red}
+          \ex
+
+          \begin{tikzpicture}
+            \contour[contour raise=0.5cm]
+            {|[2]pa|[2] |[6]lau|[5]}
+          \end{tikzpicture}
+
+
+          \begingl
+          pa[now]
+          lau[neaten]
+          \glft \transtext{I'm gonna pack away soon, so just---}
+          \endgl
+          \xe
+          }
+          \ex
+
+          \begin{tikzpicture}
+            \contour[contour raise=0.5cm]
+            {|[4]wa|[6]}
+          \end{tikzpicture}
+
+          \begingl
+          wa[\textsc{aff}]
+          \glft \transtext{Yeah okay---}
+          \endgl
+          \xe
+          {
+            \color{red}
+            \ex
+
+            \begin{tikzpicture}
+              \contour[contour raise=0.5cm]
+              {|[4]tutu |[5]niha|[1] ta|[2]}
+            \end{tikzpicture}
+
+            \begingl
+            tu\textasciitilde tu[\textsc{erg\textasciitilde 2sg}]
+            niha[give]
+            ta[\textsc{prox}]
+            \glft \transtext{Just take them.}
+            \endgl
+            \xe
+            }
+            \ex
+
+            \begin{tikzpicture}
+              \contour[contour raise=0.5cm]
+              {|[4]mapi|[4]ʔe |[2]ila|[3]}
+            \end{tikzpicture}
+
+            \begingl
+            mapi-ʔe[whole\textsc{-assoc}]
+            ila[gift]
+            \glft \transtext{Free?}
+            \endgl
+            \xe
+            {
+              \color{red}
+              \ex
+
+              \begin{tikzpicture}
+                \contour[contour raise=0.5cm]
+                {|[2]nihasi |[4]ila|[2] lu me|[1]}
+              \end{tikzpicture}
+
+
+              \begingl
+              niha-si[give\textsc{-inv}]
+              ila[gift]
+              lu[\textsc{obv}]
+              me[\textsc{1sg}]
+              \glft \transtext{You'll pay me later.}
+              \endgl
+              \xe}
+
+              \ex
+
+              \begin{tikzpicture}
+                \contour[contour raise=0.5cm]
+                {|[2]ɸawa|[1]si|[3]}
+              \end{tikzpicture}
+
+
+              \begingl
+              ɸawa-si[thank\textsc{-inv}]
+              \glft \transtext{Thank you!}
+              \endgl
+              \xe
+              {
+                \color{red}
+                \ex
+
+                \begin{tikzpicture}
+                  \contour[contour raise=0.5cm]
+                  {|[2]tu |[2]siʔe|[6]}
+                \end{tikzpicture}
+
+                \begingl
+                tu[\textsc{2sg}]
+                siʔe[brightness\textsc{-assoc}]
+                \glft \transtext{Take care.}
+                \endgl
+                \xe
+                }
+
+                \ex
+
+                \begin{tikzpicture}
+                  \contour[contour raise=0.5cm]
+                  {|[2]taʔe |[4]kate,|[2] |[5]iokusi|[3] a|[4]lete|[1] |[4]aukusi|[2]}
+                \end{tikzpicture}
+
+                \begingl
+                ta-ʔe[\textsc{prox-assoc}]
+                kate[good]
+                i-auku-si[\textsc{pst.ipfv-}see\textsc{-inv}]
+                alete[thus]
+                auku-si[see\textsc{-inv}]
+                \glft \transtext{Alright, see you later.}
+                \endgl
+                \xe
+
+
+                {
+                  \color{red}
+                  \ex
+
+
+                  \begin{tikzpicture}
+  \contour[contour raise=0.5cm]
+  {|[2]meme |[4]hasi ta|[2]}
+\end{tikzpicture}
+
+
+\begingl
+me\textasciitilde me[\textsc{erg\textasciitilde 1sg}]
+hasi[continue]
+ta[\textsc{prox}]
+\glft \transtext{Goodbye.}
+\endgl
+\xe
+
+\ex
+
+\begin{tikzpicture}
+  \contour[contour raise=0.5cm]
+  {|[2]Pa upe upe|[2], |[4]atai |[6]leha |[2]meme|[2] upe?|[4]}
+\end{tikzpicture}
+
+\begingl
+pa[now]
+upe[yam]
+upe[yam]
+atai[number]
+leha[have\textsc{[q]}]
+me\textasciitilde me[\textsc{erg\textasciitilde 1sg}]
+upe[yam]
+\glft \transtext{Yams, yams... shit, how many do I have left now?}
+\endgl
+\xe}
+\end{comment}
+\input{TeX_files/assorted_notes/dir-inv-notes}
+\input{TeX_files/assorted_notes/verb-constructions}
+\part{Translations}
+\include{TeX_files/assorted_notes/smoyds}
+\input{TeX_files/assorted_notes/dictionary}
+\end{document}

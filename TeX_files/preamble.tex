@@ -4,7 +4,8 @@
 
 \usepackage{fancyhdr}
 \usepackage{parskip}
-\usepackage{marginnote}
+\usepackage{marginfix}
+\usepackage{changepage}
 \usepackage{enumitem}
 \usepackage{booktabs}
 
@@ -66,6 +67,7 @@ BoldItalicFont = *-BoldItalic,
 %* Margin notes
 \setlength{\marginparsep}{2em}
 \setlength{\marginparpush}{1em}
+\newcommand{\aside}[1]{\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \footnotesize #1}}
 
 %* Lists
 \setlist{topsep=0em, itemsep=.125em}

@@ -30,17 +30,9 @@
 
 %? Layout
 
-%* Phonetic rules spacing
-% \let\origphonc\phonc
-% \def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}
-% \let\origphon\phon
-% \def\phon{\setlength{\tabcolsep}{3pt}\origphon}
-
 %* Header/footer
 \setlength{\headheight}{15pt}
 \pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
-\renewcommand{\sectionmark}[1]{ \markright{#1} }
 
 \fancyhf{}
 \renewcommand{\headrulewidth}{.4pt}
@@ -74,12 +66,11 @@ BoldItalicFont = *-BoldItalic,
 \setlist[itemize]{label=---}
 
 %? Shortcuts
+\newcommand{\langname}{Ahale}
+\newcommand{\allo}{\textasciitilde}
 
 %* Ling notation
-\newcommand{\langname}{Ahale}
 \newcommand{\phontext}[1]{[#1]}
 \newcommand{\phomtext}[1]{/#1/}
 \newcommand{\morphtext}[1]{|#1|}
 \newcommand{\orthotext}[1]{\textlangle #1\textrangle}
-
-\newcommand{\allo}{\textasciitilde}

@@ -9,12 +9,15 @@
 \usepackage{enumitem}
 \usepackage{booktabs}
 
-\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
 
-%? Ling stuff
 \usepackage[nostandards]{baabbrevs}
 \usepackage[nostdabbrevs, 2level, columns]{baarux}
 \usepackage{tikzvowel, phonrule}
+
+\usepackage[hidelinks]{hyperref}
+
+%? Ling stuff
 % \baaruset{tr.markup=\transtext, preamble.markup=\bfseries}
 % \newbaarulinetype{preamble}{pronunciation}{\phontext}
 % \newbaarulinetype{tr}{lit}{\textit{Lit: }}
@@ -64,6 +67,14 @@ BoldItalicFont = *-BoldItalic,
 %* Lists
 \setlist{topsep=0em, itemsep=.125em}
 \setlist[itemize]{label=---}
+
+%? Text formatting
+\definecolor{shuuchu}{HTML}{FF0000}
+
+\newcommand{\native}[1]{\textit{#1}}
+\newcommand{\trans}[1]{`#1'}
+\newcommand{\vikti}[1]{\textit{#1}}
+\newcommand{\shuuchu}[1]{{\color{shuuchu}#1}}
 
 %? Shortcuts
 \newcommand{\langname}{Ahale}

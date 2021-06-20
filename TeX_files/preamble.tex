@@ -81,7 +81,11 @@ BoldItalicFont = *-BoldItalic,
 \newcommand{\aside}[1]{\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \footnotesize #1}}
 
 %* Lists
-\setlist{topsep=0em, itemsep=.125em}
+\newlength{\listsep}
+\setlength{\listsep}{-\parskip}
+\addtolength{\listsep}{.5em}
+
+\setlist{topsep=0em, itemsep=\listsep}
 \setlist[itemize]{label=---}
 
 %? Text formatting

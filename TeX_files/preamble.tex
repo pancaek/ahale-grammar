@@ -10,6 +10,7 @@
 \usepackage{booktabs}
 
 \usepackage{xcolor}
+\usepackage{soul}
 
 \usepackage[nostandards]{baabbrevs}
 \usepackage[nostdabbrevs, 2level, columns]{baarux}
@@ -99,3 +100,13 @@ BoldItalicFont = *-BoldItalic,
 \newcommand{\phomtext}[1]{/#1/}
 \newcommand{\morphtext}[1]{|#1|}
 \newcommand{\orthotext}[1]{⟨#1⟩}
+
+%* Revision
+\makeatletter
+\newcommand{\ifdraft}[2][]{\ifdim\overfullrule>\z@
+  \expandafter#2\else\expandafter#1\fi}
+\makeatother
+
+\newcommand{\add}[2][]{\ifdraft[\leavevmode\unskip]{{\color{blue}#2}\aside{{\color{blue}#1}}}}
+\newcommand{\remove}[2][]{\ifdraft[#2]{{\setstcolor{red}\st{#2}}\aside{{\color{red}#1}}}}
+\newcommand{\replace}[3][]{{\ifdraft[#2]{\setstcolor{red}\st{#2}}\add[#1]{#3}}}

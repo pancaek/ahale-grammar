@@ -123,5 +123,9 @@ BoldItalicFont = *-BoldItalic,
 
 %? Baarux stuff
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}}
+\updatebaarustyle{columns}{}{\vspace{-1em}}
+\let\origendcolumns=\endcolumns
+\def\endcolumns{\origendcolumns\vspace{-1em}}
+
 \newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{{},\textrightarrow\hspace{\baaruuse{cellspacing}}}

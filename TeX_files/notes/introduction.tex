@@ -41,6 +41,7 @@ These are most frequently used when discussing word choice and similar nuance, c
 A fully annotated glossed example is formatted as follows:
 
 \begin{example}
+  \context Situational context
   \lect Dialect
   \script Native orthography (undelimited)
   \romanization Romanization (undelimited)
@@ -54,11 +55,11 @@ A fully annotated glossed example is formatted as follows:
 
 \filbreak
 
-Another example style is used when describing inflection paradigms, or other mutations:
+Another example style is used when describing inflection paradigms or other mutations.
+This type of example uses romanized \langname , as it closely resembles the phonological form of words. The changed portion of a word is colored, as shown in the followiing:
 
-%! Replace with a real example
-% \begin{columns}[cols.markup=\mutations]
-%   \cols japatu & to gasp
-%   \cols makisatu & to dig a hole
-%   \cols uwitu & to transgress
-% \end{columns}
+\begin{columns}[cols.markup=\mutations]
+  \cols word & \highlight{inflected} word
+  \cols word & \highlight{inflected} word
+  \cols word & \highlight{inflected} word
+\end{columns}

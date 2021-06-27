@@ -5,8 +5,8 @@
 \usepackage[en-US]{datetime2}
 
 \usepackage{fancyhdr}
+\usepackage{titlesec}
 \usepackage{emptypage}
-
 \usepackage{parskip}
 \usepackage{marginfix}
 \usepackage{changepage}
@@ -51,6 +51,7 @@
 
 %? Layout
 \setcounter{secnumdepth}{1}
+\titleformat{\chapter}[hang]{\huge}{\chaptertitlename\ \thechapter\hspace{.5em}\vrule width .5pt}{.5em}{}[]
 
 %* Header/footer
 \setlength{\headheight}{15pt}

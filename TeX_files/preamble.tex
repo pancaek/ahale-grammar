@@ -51,7 +51,10 @@
 
 %? Layout
 \setcounter{secnumdepth}{1}
-\titleformat{\chapter}[hang]{\huge}{\chaptertitlename\ \thechapter\hspace{.5em}\vrule width .5pt}{.5em}{}[]
+\titleformat{\chapter}[hang]{\normalfont\Huge}{\chaptertitlename\ \thechapter\hspace{.5em}\vrule width .7pt}{.5em}{}
+\titleformat{\section}[hang]{\normalfont\Large}{\thesection}{.5em}{}
+\titleformat{\subsection}[hang]{\normalfont\large}{\thesubsection}{.5em}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize}{\thesubsubsection}{.5em}{}
 
 %* Header/footer
 \setlength{\headheight}{15pt}

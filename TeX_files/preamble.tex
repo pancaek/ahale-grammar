@@ -35,13 +35,11 @@
 \crefname{fnexesi}{}{}
 \creflabelformat{fnexesi}{#2(#1)#3}
 
-
 %? Ling stuff
 % \baaruset{tr.markup=\transtext, preamble.markup=\bfseries}
 % \newbaarulinetype{preamble}{pronunciation}{\phontext}
 % \newbaarulinetype{tr}{lit}{\textit{Lit: }}
 % \newcommand{\baaruref}[1]{\hyperref[#1]{(\ref*{#1})}}
-
 
 % \newbaarulinetype{insert}{tikz}{\tikz[baaru]}
 % \tikzset{baaru/.style={baseline=0.3ex}}
@@ -124,9 +122,10 @@
 
 %? Baarux stuff
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}}
-\updatebaarustyle{columns}{}{\vspace{-1em}}
-\let\origendcolumns=\endcolumns
-\def\endcolumns{\origendcolumns\vspace{-1em}}
+\let\origendcolumns\endcolumns
+\def\endcolumns{\origendcolumns\vspace{-\parskip}}
+\let\origcolumns\columns
+\def\columns{\vspace{-\parskip}\origcolumns}
 
 \newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}

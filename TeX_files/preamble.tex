@@ -123,9 +123,9 @@
 %? Baarux stuff
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}}
 \let\origendcolumns\endcolumns
-\def\endcolumns{\origendcolumns\vspace{-\parskip}}
+\def\endcolumns{\origendcolumns\vspace{-\baaruuse{colspacing}}}
 \let\origcolumns\columns
-\def\columns{\vspace{-\parskip}\origcolumns}
+\def\columns{\vspace{-\baaruuse{colspacing}}\origcolumns}
 
 \newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}

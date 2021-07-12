@@ -95,7 +95,8 @@
 \newcommand{\native}[1]{\textbf{#1}}
 \newcommand{\nativeparen}[1]{(\thinspace #1\thinspace)}
 \newcommand{\rom}[1]{\textit{#1}}
-\newcommand{\trans}[1]{`#1'}
+\newcommand{\ifprinted}[2]{\setbox0=\hbox{#1\unskip}\ifdim\wd0=0pt\else#2\fi}
+\newcommand{\trans}[1]{\ifprinted{#1}{`#1'}}
 \newcommand{\detail}[1]{\textit{#1}}
 \newcommand{\highlight}[1]{{\color{highlight}#1}}
 

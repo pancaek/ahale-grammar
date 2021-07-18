@@ -123,12 +123,14 @@
 \newcommand{\replace}[3][]{{\ifdraft[#2]{\setstcolor{red}\st{#2}}\add[#1]{#3}}}
 
 %? Baarux stuff
+%* Fix spacing isses from parskip
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}}
 \let\origendcolumns\endcolumns
 \def\endcolumns{\origendcolumns\vspace{-\baaruuse{colspacing}}}
 \let\origcolumns\columns
 \def\columns{\vspace{-\baaruuse{colspacing}}\origcolumns}
 
+%* Set up new line types
 \newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}
 \updatebaarustyle{columns}{}{\addbaaruhook{everygloss}{\baarucolwidth{1}{3.25cm}}}

@@ -130,6 +130,9 @@
 \let\origcolumns\columns
 \def\columns{\vspace{-\baaruuse{colspacing}}\origcolumns}
 
+%* Document specific spacing
+\baaruset{junctureoutersep=0.3ex, junctureinnersep=.4ex}
+
 %* Set up new line types
 \newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}

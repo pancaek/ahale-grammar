@@ -117,7 +117,7 @@
   \expandafter#2\else\expandafter#1\fi}
 \makeatother
 
-\newcommand{\notetoself}[1]{\ifdraft{\aside{{\color{gray}#1}}}}
+\newcommand{\notetoself}[1]{\ifdraft{\aside{{\color{gray}#1}}}\ignorespaces}
 \newcommand{\add}[2][]{\ifdraft[\leavevmode\unskip]{{\color{blue}#2}\aside{{\color{blue}#1}}}}
 \newcommand{\remove}[2][]{\ifdraft[#2]{{\setstcolor{red}\st{#2}}\aside{{\color{red}#1}}}}
 \newcommand{\replace}[3][]{{\ifdraft[#2]{\setstcolor{red}\st{#2}}\add[#1]{#3}}}

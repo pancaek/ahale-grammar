@@ -16,7 +16,11 @@
 \usepackage{xcolor}
 \usepackage{soul}
 
-\usepackage[nostandards]{baabbrevs}
+%! 'glossaries' must be before baabbrevs
+\usepackage[nogroupskip,nonumberlist]{glossaries}
+\usepackage{glossary-mcols}
+
+\usepackage[nostandards,mcolblock]{baabbrevs}
 \usepackage[nostdabbrevs, 2level, columns]{baarux}
 \usepackage{tikzvowel, phonrule}
 
@@ -86,6 +90,11 @@
 
 \setlist{topsep=0em, itemsep=\listsep}
 \setlist[itemize]{label=---}
+
+%* Glossary
+\renewcommand*{\glsnamefont}[1]{#1}
+
+
 
 %? Text formatting
 \definecolor{highlight}{HTML}{A8236E}

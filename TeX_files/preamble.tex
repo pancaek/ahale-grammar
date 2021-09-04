@@ -41,7 +41,6 @@
 \newcommand{\crefrangeconjunction}{ through }
 
 %? Ling stuff
-% \newbaarulinetype{tr}{lit}{\textit{Lit: }}
 
 % \newbaarulinetype{insert}{tikz}{\tikz[baaru]}
 % \tikzset{baaru/.style={baseline=0.3ex}}
@@ -94,8 +93,6 @@
 %* Glossary
 \renewcommand*{\glsnamefont}[1]{#1}
 
-
-
 %? Text formatting
 \definecolor{highlight}{HTML}{A8236E}
 
@@ -143,6 +140,7 @@
 \newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}
 \updatebaarustyle{columns}{}{\addbaaruhook{everygloss}{\baarucolwidth{1}{3.25cm}}}
+\newbaarulinetype{tr}{lit}{\textit{Lit: }}
 
 \setbaaruabbrevseps{.:-()<>}
 \newbaarucmd*{\allo}{\baarujuncture\allo}
@@ -166,3 +164,6 @@
 \baabbrev{ndst}{Nondistributive}
 
 \baabbrev{assoc}{Associative}
+
+\baabbrev{dir}{Direct agreement}
+\baabbrev{inv}{Inverse agreement}

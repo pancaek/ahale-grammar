@@ -9,6 +9,7 @@
 \usepackage{emptypage}
 \usepackage{parskip}
 \usepackage{marginfix}
+\usepackage{caption}
 \usepackage{changepage}
 \usepackage{enumitem}
 \usepackage{booktabs}
@@ -82,7 +83,10 @@
 %* Margin notes
 \setlength{\marginparsep}{2em}
 \setlength{\marginparpush}{1em}
-\newcommand{\aside}[1]{\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \footnotesize #1}}
+\newcommand{\aside}[1]{
+\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \captionsetup{font=footnotesize} \footnotesize #1}
+}
+
 
 %* Lists
 \newlength{\listsep}

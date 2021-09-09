@@ -83,8 +83,11 @@
 %* Margin notes
 \setlength{\marginparsep}{2em}
 \setlength{\marginparpush}{1em}
+
+\DeclareCaptionJustification{smartragged}{\ifoddpage\raggedright \else \raggedleft\fi}
+
 \newcommand{\aside}[1]{
-\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \captionsetup{font=footnotesize} \footnotesize #1}
+\marginpar{\strictpagecheck\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi \captionsetup{justification=smartragged, font=footnotesize} \footnotesize #1}
 }
 
 

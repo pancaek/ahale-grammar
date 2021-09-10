@@ -1,45 +1,42 @@
-\usepackage[nogroupskip,nonumberlist]{glossaries}
-\usepackage{glossary-mcols}
-\usepackage{tikzvowel, phonrule}
-\usepackage[nostandards,mcolblock]{baabbrevs}
-\usepackage[nostdabbrevs, 2level, columns]{baarux}
-\usepackage[hidelinks]{hyperref}
-\usepackage{cleveref}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pancake-ling}[2021/09/10 Pancake's linguistics bundle]
 
-\crefname{exesi}{example}{examples}
-\creflabelformat{exesi}{#2(#1)#3}
-\crefname{exesii}{example}{examples}
-\creflabelformat{exesii}{#2(#1)#3}
-\crefname{exesiii}{example}{examples}
-\creflabelformat{exesiii}{#2(#1)#3}
-\crefname{exesiv}{example}{examples}
-\creflabelformat{exesiv}{#2(#1)#3}
-\crefname{fnexesi}{example}{examples}
-\creflabelformat{fnexesi}{#2(#1)#3}
-\newcommand{\crefrangeconjunction}{ through }
-
-\newbaarulinetype{insert}{tikz}{\tikz[baaru]}
-\tikzset{baaru/.style={baseline=0.3ex}}
+\RequirePackage[nogroupskip,nonumberlist]{glossaries}
+\RequirePackage{glossary-mcols}
+\RequirePackage[nostandards,mcolblock]{baabbrevs}
+\RequirePackage[nostdabbrevs, 2level, columns]{baarux}
+\RequirePackage{tikzvowel, phonrule}
+\AtBeginDocument{
+  \@ifpackageloaded{cleveref}{
+    \crefname{exesi}{example}{examples}
+    \creflabelformat{exesi}{#2(#1)#3}
+    \crefname{exesii}{example}{examples}
+    \creflabelformat{exesii}{#2(#1)#3}
+    \crefname{exesiii}{example}{examples}
+    \creflabelformat{exesiii}{#2(#1)#3}
+    \crefname{exesiv}{example}{examples}
+    \creflabelformat{exesiv}{#2(#1)#3}
+    \crefname{fnexesi}{example}{examples}
+    \creflabelformat{fnexesi}{#2(#1)#3}
+    \newcommand{\crefrangeconjunction}{ through }
+  }{}
+}
 
 \newcommand{\native}[1]{\textbf{#1}}
-\newcommand{\nativeparen}[1]{（#1）}
 \newcommand{\rom}[1]{\textit{#1}}
 \newcommand{\ifprinted}[2]{\setbox0=\hbox{#1}\ifdim\wd0=0pt\else#2\fi}
 \newcommand{\trans}[1]{\ifprinted{#1}{`#1'}}
-\newcommand{\detail}[1]{\textit{#1}}
-\newcommand{\highlight}[1]{{\color{highlight}#1}}
 
-%? Shortcuts
-\newcommand{\allo}{\textasciitilde}
-
-%* Ling notation
 \newcommand{\phontext}[1]{[#1]}
 \newcommand{\phomtext}[1]{/#1/}
 \newcommand{\morphtext}[1]{⫽#1⫽}
 \newcommand{\orthotext}[1]{⟨#1⟩}
 
-%? Baarux stuff
-%* Fix spacing isses from parskip
+\let\origphonc\phonc
+\def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}
+\let\origphon\phon
+\def\phon{\setlength{\tabcolsep}{3pt}\origphon}
+
 \addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}}
 \let\origendcolumns\endcolumns
 \def\endcolumns{\origendcolumns\vspace{-\baaruuse{colspacing}}}
@@ -51,9 +48,9 @@
 
 %* Set up new line types
 \newbaarulinetype{script}{romanization}{}
-\newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}
-\updatebaarustyle{columns}{}{\addbaaruhook{everygloss}{\baarucolwidth{1}{3.25cm}}}
+\newbaarulinetype{insert}{tikz}{\tikz[baaru]}
+\tikzset{baaru/.style={baseline=0.3ex}}
 \newbaarulinetype{tr}{lit}{\textit{Lit: }}
 
-\setbaaruabbrevseps{.:-()<>}
-\newbaarucmd*{\allo}{\baarujuncture\allo}
+\newbaarucmd{<}{\baaruopenbracket〈}
+\newbaarucmd{>}{\baaruclosebracket〉}

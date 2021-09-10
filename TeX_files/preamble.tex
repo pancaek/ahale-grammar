@@ -6,33 +6,10 @@
 \usepackage{xcolor}
 \usepackage{soul}
 
-%! glossaries must be before baabbrevs
-\usepackage[nogroupskip,nonumberlist]{glossaries}
-\usepackage{glossary-mcols}
-\usepackage[nostandards,mcolblock]{baabbrevs}
-\usepackage[nostdabbrevs, 2level, columns]{baarux}
-\usepackage{tikzvowel, phonrule}
+\usepackage{pancake-ling}
 \usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
 \usepackage[outer=6cm, inner=3cm]{geometry}
-
-
-%? References
-\crefname{exesi}{example}{examples}
-\creflabelformat{exesi}{#2(#1)#3}
-\crefname{exesii}{example}{examples}
-\creflabelformat{exesii}{#2(#1)#3}
-\crefname{exesiii}{example}{examples}
-\creflabelformat{exesiii}{#2(#1)#3}
-\crefname{exesiv}{example}{examples}
-\creflabelformat{exesiv}{#2(#1)#3}
-\crefname{fnexesi}{example}{examples}
-\creflabelformat{fnexesi}{#2(#1)#3}
-\newcommand{\crefrangeconjunction}{ through }
-
-%? Ling stuff
-% \newbaarulinetype{insert}{tikz}{\tikz[baaru]}
-% \tikzset{baaru/.style={baseline=0.3ex}}
 
 %? Date handling
 \DTMsavedate{startdate}{2020-03-15}
@@ -54,23 +31,13 @@
 %? Text formatting
 \definecolor{highlight}{HTML}{A8236E}
 
-\newcommand{\native}[1]{\textbf{#1}}
 \newcommand{\nativeparen}[1]{（#1）}
-\newcommand{\rom}[1]{\textit{#1}}
-\newcommand{\ifprinted}[2]{\setbox0=\hbox{#1}\ifdim\wd0=0pt\else#2\fi}
-\newcommand{\trans}[1]{\ifprinted{#1}{`#1'}}
 \newcommand{\detail}[1]{\textit{#1}}
 \newcommand{\highlight}[1]{{\color{highlight}#1}}
 
 %? Shortcuts
 \newcommand{\langname}{Ahale}
 \newcommand{\allo}{\textasciitilde}
-
-%* Ling notation
-\newcommand{\phontext}[1]{[#1]}
-\newcommand{\phomtext}[1]{/#1/}
-\newcommand{\morphtext}[1]{⫽#1⫽}
-\newcommand{\orthotext}[1]{⟨#1⟩}
 
 %* Annotation
 \makeatletter
@@ -80,24 +47,13 @@
 \newcommand{\notetoself}[1]{\ifdraft{\aside{{\color{gray}#1}}}\ignorespaces}
 
 %? Baarux stuff
-%* Fix spacing isses from parskip
-\addbaaruhook{everyexesi}{\setlength{\topsep}{0pt}}
-\let\origendcolumns\endcolumns
-\def\endcolumns{\origendcolumns\vspace{-\baaruuse{colspacing}}}
-\let\origcolumns\columns
-\def\columns{\vspace{-\baaruuse{colspacing}}\origcolumns}
-
-%* Document specific spacing
-\baaruset{junctureoutersep=0.3ex, junctureinnersep=.4ex}
 
 %* Set up new line types
-\newbaarulinetype{script}{romanization}{}
 \newbaarucolstyle*{mutations}{\rom ,\textrightarrow\hspace{\baaruuse{cellspacing}}\rom , \trans}
 \updatebaarustyle{columns}{}{\addbaaruhook{everygloss}{\baarucolwidth{1}{3.25cm}}}
-\newbaarulinetype{tr}{lit}{\textit{Lit: }}
 
-\setbaaruabbrevseps{.:-()<>}
-\newbaarucmd*{\allo}{\baarujuncture\allo}
+% \setbaaruabbrevseps{.:-()<>}
+% \newbaarucmd*{\allo}{\baarujuncture\allo}
 
 %* Abbreviations
 \baabbrev[\FIRST]{1}{First person}

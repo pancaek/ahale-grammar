@@ -6,8 +6,9 @@
 \RequirePackage[nostandards,mcolblock]{baabbrevs}
 \RequirePackage[nostdabbrevs, 2level, columns]{baarux}
 \RequirePackage{tikzvowel, phonrule}
-\AtBeginDocument{
-  \@ifpackageloaded{cleveref}{
+
+\RequirePackage{afterpackage}
+\AfterPackage{cleveref}{
     \crefname{exesi}{example}{examples}
     \creflabelformat{exesi}{#2(#1)#3}
     \crefname{exesii}{example}{examples}
@@ -19,7 +20,6 @@
     \crefname{fnexesi}{example}{examples}
     \creflabelformat{fnexesi}{#2(#1)#3}
     \newcommand{\crefrangeconjunction}{ through }
-  }{}
 }
 
 \newcommand{\native}[1]{\textbf{#1}}

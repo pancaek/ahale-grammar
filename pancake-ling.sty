@@ -46,7 +46,11 @@
 %* Document specific spacing
 \baaruset{junctureoutersep=0.3ex, junctureinnersep=.4ex}
 
-%* Set up new line types
+%* Set up new line types/junctures
+\newbaarucmd{<}{\baaruscan⟨}
+\newbaarucmd{>}{\baaruscan⟩}
+\setbaaruabbrevseps{.:-()⟨⟩}
+
 \newbaarulinetype{script}{romanization}{}
 \newbaarulinetype{insert}{tikz}{\tikz[baaru]}
 \tikzset{baaru/.style={baseline=0.3ex}}

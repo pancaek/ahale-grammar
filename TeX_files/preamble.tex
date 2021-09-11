@@ -31,7 +31,7 @@
 %? Text formatting
 \definecolor{highlight}{HTML}{A8236E}
 
-\newcommand{\nativeparen}[1]{（#1）}
+\newcommand{\nativeparen}[1]{{\kern-6pt（#1）\kern-6pt}}
 \newcommand{\detail}[1]{\textit{#1}}
 \newcommand{\highlight}[1]{{\color{highlight}#1}}
 
@@ -44,7 +44,7 @@
 \newcommand{\ifdraft}[2][]{\ifdim\overfullrule>\z@
   \expandafter#2\else\expandafter#1\fi}
 \makeatother
-\newcommand{\notetoself}[1]{\ifdraft{\aside{{\color{gray}#1}}}\ignorespaces}
+\newcommand{\notetoself}[1]{\ifdraft{\sidenote{\color{gray}#1}}}
 
 %? Baarux stuff
 

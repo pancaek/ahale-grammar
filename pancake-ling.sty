@@ -1,6 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{pancake-ling}[2021/09/10 Pancake's linguistics bundle]
 
+\RequirePackage{etoolbox}
+
 \RequirePackage[nogroupskip,nonumberlist]{glossaries}
 \RequirePackage{glossary-mcols}
 \RequirePackage[nostandards,mcolblock]{baabbrevs}
@@ -31,6 +33,12 @@
 \newcommand{\phomtext}[1]{/#1/}
 \newcommand{\morphtext}[1]{⫽#1⫽}
 \newcommand{\orthotext}[1]{⟨#1⟩}
+
+\RequirePackage{adjustbox}
+% Patch vowel to fit in marginfigure
+\BeforeBeginEnvironment{vowel}{\begin{adjustbox}{max width=\textwidth, keepaspectratio}}
+\AfterEndEnvironment{vowel}{\end{adjustbox}}
+
 
 \let\origphonc\phonc
 \def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}

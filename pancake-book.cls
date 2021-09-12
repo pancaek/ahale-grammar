@@ -14,7 +14,6 @@
 %* Header/footer
 \RequirePackage{emptypage}
 
-
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 
@@ -48,6 +47,11 @@
 \DeclareCaptionStyle{marginfigure}{font=footnotesize,justification=smartragged}
 \DeclareCaptionStyle{margintable}{font=footnotesize,justification=smartragged}
 
+\makeatletter
+\newcommand{\ifdraft}[2][]{\ifdim\overfullrule>\z@
+  \expandafter#2\else\expandafter#1\fi}
+\makeatother
+\newcommand{\notetoself}[1]{\ifdraft{\sidenote{\color{gray}#1}}}
 
 %* Structure enhancements
 \RequirePackage{parskip}

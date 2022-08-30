@@ -1,0 +1,1 @@
+- [ ] Migrate the rest of `old_notes\` (so that I can delete the folder and reduce confusion wrt outdated things)

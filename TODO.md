@@ -1,1 +1,11 @@
-- [ ] Migrate the rest of `old_notes\` (so that I can delete the folder and reduce confusion wrt outdated things)
+- [ ] Integrate the rest of `old_notes\` content
+  - [ ] dictionary.tex
+  - [ ] dir-inv-notes.tex
+  - [ ] noun-attributives.tex
+  - [ ] noun-compounding.tex
+  - [ ] noun-derivational-morpho.tex
+  - [ ] noun-narrowing.tex
+  - [ ] smoyds.tex
+  - [ ] verb-reciprocals.tex
+- [ ] Remove kanji ortho (it's dumb)
+- [ ] Reassess document structure

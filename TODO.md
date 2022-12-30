@@ -7,5 +7,5 @@
   - [ ] noun-narrowing.tex
   - [ ] smoyds.tex
   - [ ] verb-reciprocals.tex
-- [ ] Remove kanji ortho (it's dumb)
+- [x] Remove kanji ortho (it's dumb)
 - [ ] Reassess document structure

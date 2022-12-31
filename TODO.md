@@ -1,6 +1,6 @@
 - [ ] Integrate the rest of `old_notes\` content
-  - [ ] dictionary.tex
-  - [ ] dir-inv-notes.tex
+  - [x] dictionary.tex
+  - [x] dir-inv-notes.tex
   - [ ] noun-attributives.tex
   - [x] noun-compounding.tex
   - [x] noun-derivational-morpho.tex

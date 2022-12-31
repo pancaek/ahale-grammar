@@ -3,7 +3,7 @@
   - [ ] dir-inv-notes.tex
   - [ ] noun-attributives.tex
   - [x] noun-compounding.tex
-  - [ ] noun-derivational-morpho.tex
+  - [x] noun-derivational-morpho.tex
   - [x] noun-narrowing.tex
   - [ ] smoyds.tex
   - [ ] verb-reciprocals.tex

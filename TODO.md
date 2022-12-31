@@ -2,9 +2,9 @@
   - [ ] dictionary.tex
   - [ ] dir-inv-notes.tex
   - [ ] noun-attributives.tex
-  - [ ] noun-compounding.tex
+  - [x] noun-compounding.tex
   - [ ] noun-derivational-morpho.tex
-  - [ ] noun-narrowing.tex
+  - [x] noun-narrowing.tex
   - [ ] smoyds.tex
   - [ ] verb-reciprocals.tex
 - [x] Remove kanji ortho (it's dumb)

@@ -1,0 +1,55 @@
+- Intro, goals, etc
+- Document structure (most of this can be lifted, I wanna reformulate it a bit though)
+  - Formatting prose
+    - Conlang text (italic)
+    - Translation (italic with single quotes)
+      - Contrastive focus shown with underlines
+    - Emphasized text (italic)
+    - Highlighted na shuuchu (bold, maybe colored? Segments article is good example)
+  - Glossing/example conventions
+    - Glossing conventions can be lifted wholesale from revamp doc
+    - Morphology/other mutations shown with `columns` examples with mutations kakena na shuuchufal
+  - Use of footnotes vs margin notes
+    - Margin notes for explanation of details and nuance from a conspeaker's view
+    - Footnotes describe external observations and describe linguistic analysis and explanation in regards to a particular detail
+- The noun phrase
+  - Ergative morphology
+  - Number/countability
+    - Plural morphology
+    - Uncountable nouns
+      - Various semantic fields
+      - Measure words
+    - Description of numeric base (base-5)
+    - Describing quantity vs explicitly counting objects-
+  - Show declension examples **with real lexemes**
+  - *Ta* and *lu* (wrt role marking)
+  - Multiple subjects/objects
+    - Comitative *ke* (A went with B to the store/A and B went to the store together)
+    - Synchronic *a* (A and B \[each] went to the store)
+    - Implications of reduplicated a- and ke-clauses
+    - Mechanics of case marking
+  - Demonstratives
+    - Medial and distal only really used in contrast with proximal
+  - Possession
+    - Inherent inalienability
+  - Derivation
+    - Origin/composition (*-la*)
+    - Manner frustratives (*-ku*)
+    - Probably other things I don't know
+- the verb phrase
+  - Direct inverse morphology
+    - Inferred arguments
+      - First person inference
+      - Obviation
+    - Aspect
+      - Imperfective
+        - Habitual
+      - Perfective
+        - Prospective
+    - Tense
+      - Nonpast
+        - Recent past
+        - *iwa alete wa* construction
+      - Past
+    - Bare forms
+    - Focus 

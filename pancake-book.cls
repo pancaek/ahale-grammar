@@ -40,12 +40,15 @@
 
 \newcommand{\smartragged}{\checkoddpage \ifoddpage\raggedright \else \raggedleft\fi}
 
+\providecommand{\marginaliasize}{\footnotesize}
+\DeclareCaptionFont{marginaliasize}{\marginaliasize}
 \let\oldmarginpar\marginpar
-\def\marginpar#1{\oldmarginpar{\footnotesize\smartragged #1}}
+\def\marginpar#1{\oldmarginpar{\marginaliasize\smartragged #1}}
 
 \DeclareCaptionJustification{smartragged}{\smartragged}
-\DeclareCaptionStyle{marginfigure}{font=footnotesize,justification=smartragged}
-\DeclareCaptionStyle{margintable}{font=footnotesize,justification=smartragged}
+
+\DeclareCaptionStyle{marginfigure}{font=marginaliasize,justification=smartragged}
+\DeclareCaptionStyle{margintable}{font=marginaliasize,justification=smartragged}
 
 \makeatletter
 \newcommand{\ifdraft}[2][]{\ifdim\overfullrule>\z@

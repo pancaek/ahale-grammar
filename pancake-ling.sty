@@ -32,14 +32,6 @@
 \newcommand{\morphtext}[1]{⫽#1⫽}
 \newcommand{\orthotext}[1]{⟨#1⟩}
 
-\RequirePackage{adjustbox}
-
-%! This causes empty vowel charts to throw an error
-% \let\origvowel\vowel
-% \def\vowel#1#2{\begin{adjustbox}{max width=\textwidth, keepaspectratio}\origvowel#1#2}
-% \let\origendvowel\endvowel
-% \def\endvowel{\origendvowel\end{adjustbox}}
-
 \let\origphonc\phonc
 \def\phonc{\setlength{\tabcolsep}{3pt}\origphonc}
 \let\origphon\phon

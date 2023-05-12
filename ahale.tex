@@ -1,6 +1,11 @@
 \documentclass[12pt, a4paper, english]{pancake-book}
 
 \input{TeX_files/preamble}
+\addbibresource{sources.bib}
+
+%! Dumb thing to hack together double solidus for `morphtext'
+\usepackage{newunicodechar}
+\newunicodechar{⫽}{/\kern-2.7pt/\kern-1pt}
 
 \begin{document}
 \title{\langname : A Complete Reference (v3)}
@@ -14,5 +19,7 @@
 
 \printglossaries
 \mainmatter
+
+\printbibliography
 
 \end{document}

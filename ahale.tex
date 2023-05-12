@@ -5,7 +5,7 @@
 
 %! Dumb thing to hack together double solidus for `morphtext'
 \usepackage{newunicodechar}
-\newunicodechar{⫽}{/\kern-2.7pt/\kern-1pt}
+\newunicodechar{⫽}{\kern-1pt/\kern-2.7pt/\kern-1pt}
 
 \begin{document}
 \title{\langname : A Complete Reference (v3)}
@@ -19,6 +19,12 @@
 
 \printglossaries
 \mainmatter
+
+\include{TeX_files/introduction}
+
+\include{TeX_files/phonology}
+
+\backmatter
 
 \printbibliography
 

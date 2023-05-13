@@ -1,0 +1,11 @@
+%! Double solidus hack
+\usepackage{newunicodechar}
+\newunicodechar{⫽}{\kern-1pt/\kern-2.7pt/\kern-1pt}
+
+%! ɭ-] kerning patch
+\XeTeXinterchartokenstate=1
+\newXeTeXintercharclass\CharRetroflexLClass
+\newXeTeXintercharclass\CharRSquareBrackClass
+\XeTeXcharclass`ɭ=\CharRetroflexLClass
+\XeTeXcharclass`] =\CharRSquareBrackClass
+\XeTeXinterchartoks\CharRetroflexLClass\CharRSquareBrackClass={\kern2.3pt}

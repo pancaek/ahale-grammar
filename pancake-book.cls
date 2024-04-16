@@ -62,9 +62,7 @@
 
 \DeclareCaptionStyle{marginfigure}{font=marginaliasize,justification=smartragged}
 \DeclareCaptionStyle{margintable}{font=marginaliasize,justification=smartragged}
-
-
-
+\DeclareCaptionStyle{sidecaption}{font=marginaliasize,justification=smartragged}
 
 %* Assorted random bits
 \makeatletter

@@ -68,3 +68,15 @@
 
 \setlist{topsep=0em, itemsep=\dimexpr\listsep - \parskip\relax}
 \setlist[itemize]{label=---}
+
+\RequirePackage{datetime2}
+
+\RequirePackage{pancake-ling}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{cleveref}
+\RequirePackage[
+  backend=biber,
+  style=apa,
+  sorting=ynt
+]{biblatex}
+\RequirePackage[outer=6cm, inner=3cm]{geometry}

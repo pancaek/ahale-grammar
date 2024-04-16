@@ -31,7 +31,7 @@
   \fancyfoot[LE,RO]{\thepage}
 }
 
-%* Side notes
+%* Marginalia
 \RequirePackage{sidenotes}
 \RequirePackage{marginfix}
 
@@ -50,6 +50,8 @@
 \DeclareCaptionStyle{marginfigure}{font=marginaliasize,justification=smartragged}
 \DeclareCaptionStyle{margintable}{font=marginaliasize,justification=smartragged}
 
+
+%* Assorted random bits
 \makeatletter
 \newcommand{\ifdraft}[2][]{\ifdim\overfullrule>\z@
   \expandafter#2\else\expandafter#1\fi}
@@ -63,9 +65,9 @@
 \RequirePackage{soul}
 \RequirePackage{xcolor}
 
+%* List adjustments
 \newlength{\listsep}
 \setlength{\listsep}{.5em}
-
 \setlist{topsep=0em, itemsep=\dimexpr\listsep - \parskip\relax}
 \setlist[itemize]{label=---}
 

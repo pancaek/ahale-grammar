@@ -1,5 +1,15 @@
 \usepackage{fontspec}
 
+\usepackage{pancake-ling}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+\usepackage[
+	backend=biber,
+	style=apa,
+	sorting=ynt
+]{biblatex}
+
+
 %? Date handling
 \DTMsavedate{startdate}{2020-03-15}
 
@@ -14,7 +24,7 @@
 \setmainfont{Libertinus Serif}
 
 %* Glossary
-\renewcommand*{\glsnamefont}[1]{#1}
+% \renewcommand*{\glsnamefont}[1]{#1}
 
 %? Text formatting
 \definecolor{highlight}{HTML}{60A861}

@@ -1,11 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{pancake-book}[2021/09/09 Annotated book class]
-
-%* Footnotes to sidenotes
-\DeclareOption{sidefootnotes}{
-	\renewcommand{\footnote}[2][]{\sidenote[#1]{#2}}
-	\renewcommand{\footnotetext}[2][]{\sidenotetext[#1]{#2}}
-	\renewcommand{\footnotemark}[1][]{\sidenotemark[#1]}
+\newif\iffullwidth
+\DeclareOption{fullwidth}{
+	\fullwidthtrue
 }
 
 \DeclareOption{letterpaper}{
@@ -18,7 +15,7 @@
 		marginparsep=2pc,
 		marginparwidth=12pc,
 		textheight=44\baselineskip,
-		headheight=1.2\baselineskip
+		headheight=\baselineskip
 	}{geometry}
 }
 
@@ -32,7 +29,7 @@
 		marginparsep=8.2mm,
 		marginparwidth=49.4mm,
 		textheight=49\baselineskip,
-		headheight=1.2\baselineskip
+		headheight=1\baselineskip
 	}{geometry}
 }
 
@@ -60,13 +57,41 @@
 		marginparsep=2pc,
 		marginparwidth=12pc,
 		textheight=56\baselineskip,
-		headheight=1.2\baselineskip
+		headheight=\baselineskip
 	}{geometry}
 }
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax
 \LoadClass{book}
+
+\newcommand\pancake@author{}
+\let\pancake@author\author
+\renewcommand*{\author}[1]{%
+	\pancake@author{#1}%
+	\renewcommand*{\plainauthor}{#1}%
+}
+
+\newcommand*{\plainauthor}{}
+
+%Title
+\newcommand\pancake@title{}
+\let\pancake@title\title
+\renewcommand*{\title}[1]{%
+	\pancake@title{#1}%
+	\renewcommand*{\plaintitle}{#1}%
+}
+\newcommand*{\plaintitle}{}
+
+%Date
+\newcommand\pancake@date{}
+\let\pancake@date\date
+\renewcommand*{\date}[1]{%
+	\pancake@date{#1}%
+	\renewcommand*{\plaindate}{#1}%
+}
+\newcommand*{\plaindate}{}
+
 % Page geometry
 \RequirePackage{geometry}
 
@@ -93,37 +118,74 @@
 
 % Patch for accsupp on xelatex
 % via https://tex.stackexchange.com/questions/262492/xelatex-misplaces-actualtext-box
-\ifxetex
-	\def\ACCSUPP@bdc{%
-		\special{pdf:code \ACCSUPP@span BDC}%
-	}
-	\def\ACCSUPP@emc{%
-		\special{pdf:code EMC}%
-	}
-\fi
+% \ifxetex
+% 	\def\ACCSUPP@bdc{%
+% 		\special{pdf:code \ACCSUPP@span BDC}%
+% 	}
+% 	\def\ACCSUPP@emc{%
+% 		\special{pdf:code EMC}%
+% 	}
+% \fi
 
 \IfPackageLoadedTF{fontspec}{}{\RequirePackage{letterspace}}
 
+% FULLWIDTH
+\RequirePackage{changepage}
+
+% Sectioning
+\RequirePackage{titlesec}
+\newsavebox\theCT
+\newcommand{\hsp}{\hspace{20pt}}
+\newlength\pancake@chapterwidth
+\newcommand{\pancake@boxednumbered}[1]{%
+	\settowidth{\pancake@chapterwidth}{\thechapter}%
+	\savebox\theCT{%
+		\parbox{\dimexpr\textwidth-3.2em-60pt-\pancake@chapterwidth}{#1}%
+	}%
+	\newcommand{\barheight}{2\baselineskip}%
+	%
+	{\rule[\dimexpr-\dp\theCT-(\barheight-\ht\theCT-\dp\theCT)/2]{3em}{\barheight}}%
+	\hsp
+	\thechapter
+	\hsp
+	% thin bar
+	{\rule[\dimexpr-\dp\theCT-(\barheight-\ht\theCT-\dp\theCT)/2]{.2em}{\barheight}}%
+	\hsp
+	%
+	\usebox{\theCT}%
+}
+
+\newcommand{\pancake@boxednumberless}[1]{%
+	\savebox\theCT{%
+		\parbox{\dimexpr\textwidth-3em-20pt}{#1}%
+	}%
+	\newcommand{\barheight}{2\baselineskip}%
+	%
+	\rule[\dimexpr-\dp\theCT-(\barheight-\ht\theCT-\dp\theCT)/2]{3em}{\barheight}%
+	\hsp
+	%
+	\usebox{\theCT}%
+}
+
+\titleformat{\chapter}[hang]{\normalfont\Huge\bfseries}
+{}{0pt}{\pancake@boxednumbered}
+\titleformat{name=\chapter,numberless}[hang]{\normalfont\Huge\bfseries}
+{}{0pt}{\pancake@boxednumberless}
 % PAGE HEAD/FOOT %
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \pagestyle{fancy}
 
 \fancyhf{}
-\fancyheadoffset{0cm}
-\renewcommand{\headrulewidth}{.4pt}
+\fancyhfoffset[LE,RO]{\dimexpr\marginparwidth+\marginparsep}
+\renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
-
-\fancyhead[LE, RO]{\chaptername{} \thechapter}
-\fancyhead[RE, LO]{\nouppercase{\leftmark}}
-\fancyfoot[LE, RO]{\thepage}
-
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+\fancyhead[LE]{\thepage\quad\plaintitle}
+\fancyhead[RO]{\leftmark\quad\thepage}
 
 \fancypagestyle{plain}{
 	\fancyhf{}
 	\renewcommand{\headrulewidth}{0pt}
 	\renewcommand{\footrulewidth}{0pt}
-	\fancyfoot[LE, RO]{\thepage}
 }
 
 % MARGINALIA %
@@ -173,34 +235,33 @@
 \colorlet{pancake@grey}{gray}
 \colorlet{pancake@accent}{pancake@grey}
 
-% ASSORTED
-\NewDocumentCommand{\ifdraft}{m}{\ifdimgreater\overfullrule\z@{#1}\expandafter}
-
-% Letterspacing
+% LETTERSPACING
 
 % For reasons that are a mystery to me, using direct floating point math breaks stuff, so don't try that
-% I love magic numbers :)
-% I think this is right finally, only open an issue about it if you've found a more correct conversion
 
 \NewDocumentCommand{\spacedtext}{O{20} m}{
-	\BeginAccSupp{ActualText=#2}%
+	% \BeginAccSupp{ActualText=#2}%
 	\IfPackageLoadedTF{fontspec}{%
-		% fix for spaces via https://tex.stackexchange.com/a/679263
-		\setlength{\spaceskip}{5\fontdimen2\font plus 5\fontdimen3\font minus \fontdimen3\font}%
 		\addfontfeature{LetterSpace=\the\numexpr#1/10\relax}#2}{\textls[#1]{#2}}%
-	\EndAccSupp{}
+	% \EndAccSupp{}
 }
 
+\newcommand{\smallcaps}[1]{{\scshape\spacedtext[50]{#1}}}
+\newcommand{\allcaps}[1]{\MakeUppercase{\scshape\spacedtext[200]{#1}}}
 
-% fullwidth
-\RequirePackage{changepage}
-
-\newlength{\pancake@fullwidthadj}
-\setlength{\pancake@fullwidthadj}{\marginparwidth}
-\addtolength{\pancake@fullwidthadj}{\marginparsep}
+% FULLWIDTH %
 
 % Basically, we subtract all space taken up by margin notes
-% I have no idea why this is negative but whatever
 % we need `changepage` so this will work mid-page
-\NewDocumentEnvironment{fullwidth}{}%
-{\begin{adjustwidth*}{}{-\pancake@fullwidthadj}}{\end{adjustwidth*}}
+\NewDocumentEnvironment{fullwidth}{}{\begin{adjustwidth*}{}{\dimexpr-\marginparwidth-\marginparsep\relax}}{\end{adjustwidth*}}
+
+
+\iffullwidth
+	\geometry{nomarginpar, textwidth=\dimexpr\textwidth+\marginparwidth+\marginparsep\relax}
+	% NOTE: This technically doesn't change the result, the math works out the same
+	% but, less overhead 
+	\RenewDocumentEnvironment{fullwidth}{}{}{}
+\fi
+
+% ASSORTED
+\NewDocumentCommand{\ifdraft}{m}{\ifdimgreater\overfullrule\z@{#1}\expandafter}
